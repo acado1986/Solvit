@@ -43,7 +43,7 @@ public class LoginDataSource {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "createUserWithEmail:success");
+                                Log.d(TAG, "createUserWithEmail: success");
                                 FirebaseUser user = mAuth.getCurrentUser();
 
                             } else {
