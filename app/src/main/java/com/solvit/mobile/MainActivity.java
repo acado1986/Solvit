@@ -47,6 +47,21 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+        db.collection("events/reception/reception_events")
+//                .whereEqualTo("role", "admin")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document :
+                                task.getResult()) {
+                            Log.d(TAG, document.getId() + " => " + document.getData());
+                        }
+                    } else {
+                        Log.d(TAG, "Error getting documents: ",
+                                task.getException());
+                    }
+                });
+
         db.collection("user")
                .whereEqualTo("id", "admin")
                 .get()
