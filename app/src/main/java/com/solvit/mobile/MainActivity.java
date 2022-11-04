@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView prueba;
     private Button btnTest;
+    private String hola;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
