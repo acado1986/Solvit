@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Solvit</string>
+    <string name="tvId">Id</string>
+    <string name="tvDescription">An description</string>
 </resources>
