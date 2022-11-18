@@ -16,6 +16,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.solvit.mobile.adminit.NotificationPanelAdminITActivity;
+import com.solvit.mobile.model.Completed;
+import com.solvit.mobile.model.NotificationModelIT;
+import com.solvit.mobile.model.Role;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnUpdateData;
     private String hola;
 
-    private ArrayList<NotificationModel> notifications;
+    private ArrayList<NotificationModelIT> notificationsGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         btnReadData.setOnClickListener(view -> {
-            notifications = new ArrayList<NotificationModel>();
+            notificationsGroup = new ArrayList<NotificationModelIT>();
             // Create a reference to the cities collection
             db.collection("events/it/it_events")
 //                .whereEqualTo("role", "admin")
@@ -58,24 +62,29 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document :
                                     task.getResult()) {
-                                // Log.d(TAG, document.getId() + " => " + document.getData());
+                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 Map<String, Object> data = document.getData();
-                                NotificationModel notification = new NotificationModel();
-                                notification.setId(document.getId());
-                                notification.setCompleted(data.get("completed").toString());
-                                notification.setPc_number((long) data.get("pc_number"));
-                                notification.setRole(data.get("role").toString());
-                                notification.setRoom(data.get("room").toString());
-                                notification.setBuilding(String.valueOf(data.get("building")));
-                                notification.setDescription(data.get("description").toString());
-                                notification.setUser(((DocumentReference) data.get("user")).getPath());
-                                // get the list of references not working
-                                // notification.setFowardTo((List<String>)data.get("fowardTo"));
-                                notifications.add(notification);
+                                NotificationModelIT notification = new NotificationModelIT();
+//                                try {
+                                    notification.setId(document.getId());
+                                    notification.setCompleted(Completed.valueOf(data.get("completed").toString()));
+                                    notification.setPcNumber((long) data.get("pcNumber"));
+                                    notification.setRole(Role.valueOf(data.get("role").toString()));
+                                    notification.setRoom(data.get("room").toString());
+                                    notification.setBuilding(data.get("building").toString());
+                                    notification.setDescription(data.get("description").toString());
+                                    //notification.setUser(((DocumentReference) data.get("user")).getPath());
+                                    // get the list of references not working
+                                    //notification.setFowardTo((List<String>)data.get("fowardTo"));
+                                    notificationsGroup.add(notification);
+//                                } catch (ClassCastException cce){
+//                                    Log.d(TAG, "ReadData: " + cce.getMessage());
+//                                    Toast.makeText(this, "No fue posible leer los datos", Toast.LENGTH_LONG).show();
+//                                }
                                 // get to notifications activity
-                                Intent intent = new Intent(this, NotificationPanelActivity.class);
-                                Log.d(TAG, String.valueOf(notifications));
-                                intent.putExtra("notifications", notifications);
+                                Intent intent = new Intent(this, NotificationPanelAdminITActivity.class);
+                                Log.d(TAG, String.valueOf(notificationsGroup));
+                                intent.putExtra("notifications", notificationsGroup);
                                 startActivity(intent);
                             }
                         } else {
@@ -134,8 +143,8 @@ public class MainActivity extends AppCompatActivity {
 
         btnWriteData.setOnClickListener(view -> {
             db.collection("events/it/it_events")
-                    .add(new NotificationModel
-                            ("done", 130, "admin", "a20", "goya", "es un test", "user/test", Arrays.asList("user1", "user2")))
+                    .add(new NotificationModelIT
+                            (Completed.ADMIN, Role.ADMIN, "a12", "Goya", "test de lo que ha pasado", "users/LLlNAwGWxYBsvaWUKbiK", Arrays.asList("users/LLlNAwGWxYBsvaWUKbiK", "users/allrdjZJvsLWZszBv49h"),1))
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
@@ -151,9 +160,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnUpdateData.setOnClickListener((view) -> {
-            DocumentReference updateRef = db.collection("events/it/it_events").document("A27VhSNe5BpqsDq2nMHb");
+            DocumentReference updateRef = db.collection("events/it/it_events").document("duwI44Cx2kWECZEc6bvN");
             updateRef
-                    .update("id", updateRef.getId())
+                    .update("completed", Completed.WORKER)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {

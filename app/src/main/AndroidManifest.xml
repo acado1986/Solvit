@@ -13,7 +13,14 @@
         android:theme="@style/Theme.Solvit"
         tools:targetApi="31">
         <activity
-            android:name=".NotificationPanelActivity"
+            android:name=".adminit.NotificationDetailsAdminIT"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".adminit.NotificationPanelAdminITActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
