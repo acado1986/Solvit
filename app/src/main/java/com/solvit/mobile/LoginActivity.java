@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 updateUI(user);
                                 Log.d(TAG, user.getEmail());
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
                                 intent.putExtra("username", user.getEmail());
                                 startActivity(intent);
                             } else {
