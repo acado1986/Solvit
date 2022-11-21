@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login2);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -50,10 +50,6 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.d(TAG, "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 updateUI(user);
-                                Log.d(TAG, user.getEmail());
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                intent.putExtra("username", user.getEmail());
-                                startActivity(intent);
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -89,8 +85,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            Toast.makeText(LoginActivity.this, user.getDisplayName(),
-                    Toast.LENGTH_LONG).show();
+            Log.d(TAG, user.getEmail());
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("user", user);
+            startActivity(intent);
         } else {
             Log.d(TAG, "error login");
         }
