@@ -6,10 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -26,6 +29,10 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnSignUp;
     private EditText etEmail;
     private EditText etPassword;
+    private CheckBox checkSignIn;
+    private SharedPreferences loginPreferences;
+    private SharedPreferences.Editor loginPrefsEditor;
+    private Boolean saveLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,14 @@ public class LoginActivity extends AppCompatActivity {
         btnSignUp = findViewById(R.id.btnSignUp);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
+        checkSignIn = findViewById(R.id.checkSignIn);
+        loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        loginPrefsEditor = loginPreferences.edit();
+
+//        FirebaseUser user = mAuth.getCurrentUser();
+//        if(user != null){
+//            updateUI(user);
+//        }
 
         btnSignIn.setOnClickListener(view -> {
             mAuth.signInWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString())
@@ -49,6 +64,16 @@ public class LoginActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
+
+                                // If Remember me checkbox is checked
+                                if(checkSignIn.isChecked()){
+                                    loginPrefsEditor.putBoolean("saveLogin", true);
+                                    loginPrefsEditor.commit();
+                                } else {
+                                    loginPrefsEditor.putBoolean("saveLogin", false);
+                                    loginPrefsEditor.commit();
+                                }
+
                                 updateUI(user);
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -92,19 +117,5 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Log.d(TAG, "error login");
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            reload();
-        }
-    }
-
-    private void reload() {
-        Toast.makeText(this, "reload", Toast.LENGTH_SHORT).show();
     }
 }

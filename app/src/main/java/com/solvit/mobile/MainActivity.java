@@ -3,6 +3,7 @@ package com.solvit.mobile;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -31,23 +34,37 @@ public class MainActivity extends AppCompatActivity {
     private Button btnReadData;
     private Button btnWriteData;
     private Button btnUpdateData;
-    private String hola;
+    private Button btnSignOut;
+
 
     private ArrayList<NotificationModelIT> notificationsGroup;
+    private SharedPreferences loginPreferences;
+    private SharedPreferences.Editor loginPrefsEditor;
+    private Boolean saveLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // check if the user is logged in
+        loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        loginPrefsEditor = loginPreferences.edit();
+        saveLogin = loginPreferences.getBoolean("saveLogin", false);
+        FirebaseUser user = (FirebaseUser)getIntent().getSerializableExtra("user");
+
+        if(saveLogin == false){
+            if(user == null) {
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+            }
+        }
+
         prueba = findViewById(R.id.prueba);
         btnReadData = findViewById(R.id.btnReadData);
         btnWriteData = findViewById(R.id.btnWriteData);
         btnUpdateData = findViewById(R.id.btnUpdateData);
-
-        Bundle user = getIntent().getExtras();
-
-        prueba.setText(user.getString("username"));
+        btnSignOut = findViewById(R.id.btnSignOut);
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -174,6 +191,14 @@ public class MainActivity extends AppCompatActivity {
                             Log.w(TAG, "Error updating document", e);
                         }
                     });
+        });
+
+        btnSignOut.setOnClickListener((view) -> {
+            FirebaseAuth.getInstance().signOut();
+            loginPrefsEditor.putBoolean("saveLogin", false);
+            loginPrefsEditor.commit();
+            finishActivity(0);
+            System.exit(0);
         });
     }
 }
