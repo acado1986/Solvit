@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private Boolean saveLogin;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // check if the user is logged in
-        loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
-        loginPrefsEditor = loginPreferences.edit();
-        saveLogin = loginPreferences.getBoolean("saveLogin", false);
-        FirebaseUser user = (FirebaseUser)getIntent().getSerializableExtra("user");
-
-        if(saveLogin == false){
-            if(user == null) {
-                Intent intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-            }
-        }
+       mAuth = FirebaseAuth.getInstance();
 
         prueba = findViewById(R.id.prueba);
         btnReadData = findViewById(R.id.btnReadData);
@@ -195,10 +186,17 @@ public class MainActivity extends AppCompatActivity {
 
         btnSignOut.setOnClickListener((view) -> {
             FirebaseAuth.getInstance().signOut();
-            loginPrefsEditor.putBoolean("saveLogin", false);
-            loginPrefsEditor.commit();
-            finishActivity(0);
-            System.exit(0);
+            finishAffinity();
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser == null){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 }

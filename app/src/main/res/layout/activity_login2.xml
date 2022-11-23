@@ -13,7 +13,11 @@
         android:background="#3fff"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -21,7 +25,6 @@
             android:background="@drawable/circle"
             android:gravity="center"
             android:text="Solvit"
-
             android:textColor="#ffffff" />
 
         <EditText
@@ -47,33 +50,13 @@
             android:selectAllOnFocus="true"
             android:textColorHint="#FFFBF6" />
 
-        <CheckBox
-            android:id="@+id/checkSignIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:buttonTint="#FFFBF6"
-            android:hint="#FFFBF6"
-            android:text="Keep me Signed in "
-            android:textColor="#FFFBF6" />
-
         <Button
             android:id="@+id/btnSignIn"
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="35dp"
             android:background="@drawable/custombutton2"
-            android:text="Entrar"
-            android:textAllCaps="false"
-            android:textColor="#FFFBF6" />
-
-        <Button
-            android:id="@+id/btnSignUp"
-            android:layout_width="250dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custombutton2"
-            android:text="Registrar"
+            android:text="Log in"
             android:textAllCaps="false"
             android:textColor="#FFFBF6" />
 
@@ -83,13 +66,31 @@
             android:layout_marginTop="15dp"
             android:background="#3fff" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Forget Password"
-            android:textColor="#FFFBF6"
-            android:textSize="18dp" />
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:weightSum="6">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Forget Password"
+                android:textColor="#FFFBF6"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sign up"
+                android:textColor="#FFFBF6"
+                android:textSize="18dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
