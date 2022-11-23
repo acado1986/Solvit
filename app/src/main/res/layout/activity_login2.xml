@@ -30,17 +30,18 @@
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="250dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/custombutton"
             android:gravity="center"
             android:hint="Email Usuario"
-            android:textColorHint="#FFFBF6" />
+            android:textColorHint="#FFFBF6"
+            android:autofillHints="" />
 
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="250dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/custombutton"
             android:gravity="center"
@@ -53,7 +54,7 @@
         <Button
             android:id="@+id/btnSignIn"
             android:layout_width="250dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_marginTop="35dp"
             android:background="@drawable/custombutton2"
             android:text="Log in"
@@ -75,14 +76,16 @@
             android:weightSum="6">
 
             <TextView
+                android:id="@+id/tvForgetPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Forget Password"
-                android:textColor="#FFFBF6"
+                android:textColor="#E8EAF6"
                 android:textSize="18dp" />
 
             <TextView
+                android:id="@+id/tvSignUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,9 +27,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private Button btnSignIn;
-    private Button btnSignUp;
     private EditText etEmail;
     private EditText etPassword;
+    private TextView tvForgetPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +40,9 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         btnSignIn = findViewById(R.id.btnSignIn);
-        btnSignUp = findViewById(R.id.btnSignUp);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
+        tvForgetPassword = findViewById(R.id.tvForgetPassword);
 
         btnSignIn.setOnClickListener(view -> {
             mAuth.signInWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString())
@@ -64,26 +65,31 @@ public class LoginActivity extends AppCompatActivity {
                     });
         });
 
-        btnSignUp.setOnClickListener(view -> {
-            mAuth.createUserWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString())
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "createUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                updateUI(user);
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                                updateUI(null);
-                            }
-                        }
-                    });
+        tvForgetPassword.setOnClickListener((view)-> {
+            Intent intent = new Intent(this, ResetPasswordActivity.class);
+            startActivity(intent);
         });
+
+//        btnSignUp.setOnClickListener(view -> {
+//            mAuth.createUserWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString())
+//                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<AuthResult> task) {
+//                            if (task.isSuccessful()) {
+//                                // Sign in success, update UI with the signed-in user's information
+//                                Log.d(TAG, "createUserWithEmail:success");
+//                                FirebaseUser user = mAuth.getCurrentUser();
+//                                updateUI(user);
+//                            } else {
+//                                // If sign in fails, display a message to the user.
+//                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
+//                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+//                                        Toast.LENGTH_SHORT).show();
+//                                updateUI(null);
+//                            }
+//                        }
+//                    });
+//        });
     }
 
     private void updateUI(FirebaseUser user) {
