@@ -13,6 +13,7 @@ import com.solvit.mobile.R;
 import com.solvit.mobile.model.NotificationModelIT;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
 
@@ -21,12 +22,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     Context context;
-    ArrayList<NotificationModelIT> notifications;
+    List<NotificationModelIT> notifications;
     OnItemClickListener listener;
 
-    public NotificationAdapter(Context context, ArrayList<NotificationModelIT> notifications, OnItemClickListener listener) {
+    public NotificationAdapter(Context context, List<NotificationModelIT> notifications, OnItemClickListener listener) {
         this.context = context;
-        this.notifications = notifications;
+      this.notifications = notifications;
         this.listener = listener;
     }
 
@@ -52,9 +53,15 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     // the number of items you want to display
     @Override
     public int getItemCount() {
-        return notifications.size();
+        if(this.notifications != null){
+            return notifications.size();
+        }
+        return 0;
     }
 
+    public void updateData(List<NotificationModelIT> notifications){
+        this.notifications = notifications;
+    }
     // grabbing the views from our layout recycle_view_item.xml, kinda of create method
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvBuilding, tvDescription, tvRoom;

@@ -32,7 +32,7 @@ public class NotificationPanelAdminITActivity extends AppCompatActivity {
         notifications = (ArrayList<NotificationModelIT>)getIntent().getSerializableExtra("notifications");
         Log.d(TAG, "notificationes" + String.valueOf(notifications.get(0).getRoom()));
 
-        NotificationAdapter adapter = new NotificationAdapter(this, notifications, new NotificationAdapter.OnItemClickListener() {
+        NotificationAdapter adapter = new NotificationAdapter(this, notifications,new NotificationAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(NotificationModelIT notification) {
                 Log.d(TAG, "onItemClick: " + notification);

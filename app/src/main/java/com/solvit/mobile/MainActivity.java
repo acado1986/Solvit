@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 //                                    Toast.makeText(this, "No fue posible leer los datos", Toast.LENGTH_LONG).show();
 //                                }
                                 // get to notifications activity
-                                Intent intent = new Intent(this, NotificationPanelAdminITActivity.class);
+                                Intent intent = new Intent(this, TabbedActivity.class);
                                 Log.d(TAG, String.valueOf(notificationsGroup));
                                 intent.putExtra("notifications", notificationsGroup);
                                 startActivity(intent);

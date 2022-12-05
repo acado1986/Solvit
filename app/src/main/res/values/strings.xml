@@ -2,4 +2,11 @@
     <string name="app_name">Solvit</string>
     <string name="tvBuilding">Building</string>
     <string name="tvDescription">An description</string>
+    <string name="title_activity_tabbed">TabbedActivity</string>
+    <string-array name="tab_name">
+        <item>Pendientes</item>
+        <item>Solucionadas</item>
+    </string-array>
+    <string name="tab_text_1">Pendientes</string>
+    <string name="tab_text_2">Solucionadas</string>
 </resources>
