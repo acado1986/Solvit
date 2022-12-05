@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(this, NotificationPanelAdminITActivity.class);
                                 Log.d(TAG, String.valueOf(notificationsGroup));
                                 intent.putExtra("notifications", notificationsGroup);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             }
                         } else {
