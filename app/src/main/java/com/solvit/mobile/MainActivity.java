@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document :
                                     task.getResult()) {
-                                 Log.d(TAG, document.getId() + " => " + document.getData());
+                                // Log.d(TAG, document.getId() + " => " + document.getData());
                                 Map<String, Object> data = document.getData();
                                 NotificationModelIT notification = new NotificationModelIT();
 //                                try {
@@ -91,8 +91,9 @@ public class MainActivity extends AppCompatActivity {
 //                                }
                                 // get to notifications activity
                                 Intent intent = new Intent(this, NotificationPanelAdminITActivity.class);
-                                Log.d(TAG, String.valueOf(notificationsGroup));
+                               // Log.d(TAG, String.valueOf(notificationsGroup));
                                 intent.putExtra("notifications", notificationsGroup);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             }
                         } else {
