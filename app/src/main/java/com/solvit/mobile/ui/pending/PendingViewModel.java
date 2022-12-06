@@ -8,9 +8,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.solvit.mobile.model.Completed;
+import com.solvit.mobile.model.NotificationModel;
 import com.solvit.mobile.model.NotificationModelIT;
 import com.solvit.mobile.repositories.NotificationRepository;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class PendingViewModel extends ViewModel {
@@ -24,11 +27,12 @@ public class PendingViewModel extends ViewModel {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
 
-        mRepo = NotificationRepository.getInstance();
+        mRepo = new NotificationRepository<NotificationModelIT>();
         notificationsLiveData = mRepo.getNotificationsDataSet();
-     //   Log.d(TAG, "PendingViewModel: notifications " + mRepo.getNotificationsDataSet("events/it/it_events"));
-       // mRepo.getNotificationsDataSet(notificationsLiveData);
-        mRepo.startNotificationsChangeListener();
+        mRepo.startNotificationsChangeListener(
+                "events/it/it_events",
+                new HashMap<String, String>(){{put("completed", Completed.WORKER.toString());}},
+                NotificationModelIT.class);
        Log.d(TAG, "PendingViewModel: new model");
     }
 

@@ -1,19 +1,37 @@
 package com.solvit.mobile.ui.completed;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.solvit.mobile.model.Completed;
+import com.solvit.mobile.model.NotificationModelIT;
+import com.solvit.mobile.repositories.NotificationRepository;
+
+import java.util.HashMap;
+import java.util.List;
+
 public class CompletedViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private MutableLiveData<List<NotificationModelIT>> notificationsLiveData;
+    private NotificationRepository mRepo;
 
     public CompletedViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        mRepo = new NotificationRepository<NotificationModelIT>();
+        notificationsLiveData = mRepo.getNotificationsDataSet();
+        mRepo.startNotificationsChangeListener(
+                "events/it/it_events",
+                new HashMap<String, String>(){{put("completed", Completed.ADMIN.toString());}},
+                NotificationModelIT.class);
+        Log.d(TAG, "CompletedViewModel: new model");
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<NotificationModelIT>> getNotificationsLiveData() {
+
+        return notificationsLiveData;
     }
 }
