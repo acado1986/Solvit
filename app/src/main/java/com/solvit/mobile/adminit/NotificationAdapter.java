@@ -13,6 +13,7 @@ import com.solvit.mobile.R;
 import com.solvit.mobile.model.NotificationModelIT;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
 
@@ -21,13 +22,19 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     Context context;
-    ArrayList<NotificationModelIT> notifications;
+    List<NotificationModelIT> notifications;
     OnItemClickListener listener;
 
-    public NotificationAdapter(Context context, ArrayList<NotificationModelIT> notifications, OnItemClickListener listener) {
+    public NotificationAdapter(Context context, List<NotificationModelIT> notifications, OnItemClickListener listener) {
         this.context = context;
         this.notifications = notifications;
         this.listener = listener;
+    }
+
+    public void update(List<NotificationModelIT> newNotifications) {
+        this.notifications.clear();
+        this.notifications = newNotifications;
+        notifyDataSetChanged();
     }
 
     // inflate the layout and giving the look of each row
