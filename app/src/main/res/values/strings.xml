@@ -10,8 +10,8 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Pending</string>
-    <string name="menu_gallery">Completed</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_pending">Pending</string>
+    <string name="menu_completed">Completed</string>
+    <string name="menu_newnotification">New Notification</string>
     <string name="sign_out">Sign out</string>
 </resources>

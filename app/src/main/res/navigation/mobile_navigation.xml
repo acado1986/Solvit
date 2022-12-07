@@ -8,20 +8,24 @@
     <fragment
         android:id="@+id/nav_pending"
         android:name="com.solvit.mobile.ui.pending.PendingFragment"
-        android:label="@string/menu_home"
+        android:label="@string/menu_pending"
         tools:layout="@layout/fragment_pending" />
 
     <fragment
         android:id="@+id/nav_completed"
         android:name="com.solvit.mobile.ui.completed.CompletedFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/menu_completed"
         tools:layout="@layout/fragment_completed" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.solvit.mobile.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_newnotification"
+        android:name="com.solvit.mobile.ui.newnotification.NewNotificationFragment"
+        android:label="@string/menu_newnotification"
+        tools:layout="@layout/fragment_newnotification" >
+        <action
+            android:id="@+id/action_nav_newnotification_to_nav_pending"
+            app:destination="@id/nav_pending" />
+    </fragment>
     <activity
         android:id="@+id/nav_signout"
         android:name="com.solvit.mobile.LoginActivity"

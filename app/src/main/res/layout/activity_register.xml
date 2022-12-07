@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wallpaper2"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#3fff"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:background="@drawable/circle"
+            android:gravity="center"
+            android:text="Solvit"
+            android:textColor="#ffffff" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/etNombre"
+                android:layout_width="180dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="1"
+                android:autofillHints=""
+                android:background="@drawable/custombutton"
+                android:gravity="center"
+                android:hint="Nombre"
+                android:textColorHint="#FFFBF6" />
+
+            <EditText
+                android:id="@+id/etApellidos"
+                android:layout_width="180dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:autofillHints=""
+                android:background="@drawable/custombutton"
+                android:gravity="center"
+                android:hint="Apellidos"
+                android:textColorHint="#FFFBF6" />
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/etRegEmail"
+            android:layout_width="250dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="15dp"
+            android:autofillHints=""
+            android:background="@drawable/custombutton"
+            android:gravity="center"
+            android:hint="Email Usuario"
+            android:textColorHint="#FFFBF6" />
+
+        <EditText
+            android:id="@+id/etRegPassword"
+            android:layout_width="250dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/custombutton"
+            android:gravity="center"
+            android:hint="Contraseña"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:selectAllOnFocus="true"
+            android:textColorHint="#FFFBF6" />
+
+        <EditText
+            android:id="@+id/etRegPasswordConfirm"
+            android:layout_width="250dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/custombutton"
+            android:gravity="center"
+            android:hint="Confirmar Contraseña"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:selectAllOnFocus="true"
+            android:textColorHint="#FFFBF6" />
+
+        <Spinner
+            android:id="@+id/spRegister"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:minHeight="48dp"
+            android:popupBackground="@color/teal_700"
+            android:layout_gravity="center_horizontal"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="15dp"
+            android:background="#3fff" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="250dp"
+            android:layout_height="48dp"
+            android:background="@drawable/custombutton2"
+            android:text="Registrar"
+            android:textAllCaps="false"
+            android:textColor="#FFFBF6" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

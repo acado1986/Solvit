@@ -15,8 +15,11 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -25,7 +28,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.solvit.mobile.databinding.ActivityNavigationDrawerBinding;
+import com.solvit.mobile.model.UserInfo;
 import com.solvit.mobile.repositories.NotificationRepository;
+import com.solvit.mobile.ui.completed.CompletedFragment;
+import com.solvit.mobile.ui.newnotification.NewNotificationFragment;
+import com.solvit.mobile.ui.pending.PendingFragment;
+import com.solvit.mobile.ui.pending.PendingViewModel;
 
 
 public class NavigationDrawerActivity extends AppCompatActivity {
@@ -34,6 +42,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavigationDrawerBinding binding;
     private FirebaseAuth mAuth;
+    private NotificationRepository mRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,29 +50,49 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
         // check if the user is logged in
         mAuth = FirebaseAuth.getInstance();
+        mRepo = new NotificationRepository();
         binding = ActivityNavigationDrawerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
-        setSupportActionBar(binding.appBarNavigationDrawer.toolbar);
-        binding.appBarNavigationDrawer.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
+        setSupportActionBar(binding.appBarNavigationDrawer.toolbar);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_pending, R.id.nav_completed, R.id.nav_slideshow, R.id.nav_signout)
+                R.id.nav_pending, R.id.nav_completed, R.id.nav_newnotification, R.id.nav_signout)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation_drawer);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        binding.appBarNavigationDrawer.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_navigation_drawer);
+
+                if( navHostFragment != null){
+                    Fragment currentFragment = navHostFragment.getChildFragmentManager().getFragments().get(0);
+
+                    if (currentFragment instanceof PendingFragment) {
+                        Toast.makeText(getApplicationContext(), "Home Fragment", Toast.LENGTH_SHORT).show();
+                        navController.navigate(R.id.nav_newnotification);
+
+
+                    } else if (currentFragment instanceof CompletedFragment) {
+                        Toast.makeText(getApplicationContext(), "Slideshow Fragment", Toast.LENGTH_SHORT).show();
+                        navController.navigate(R.id.nav_newnotification);
+
+
+                    } else if (currentFragment instanceof NewNotificationFragment) {
+                        Toast.makeText(getApplicationContext(), "Gallery Fragment", Toast.LENGTH_SHORT).show();
+                        binding.appBarNavigationDrawer.fab.setVisibility(View.INVISIBLE);
+                    }
+                }
+
+            }
+        });
 
         Log.d(TAG, "onCreate: " + navigationView.getMenu().findItem(R.id.nav_signout));
         // position of sign out is 3
@@ -103,10 +132,22 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        // makes the back button go to the first fragment before exit
+        DrawerLayout drawer = binding.drawerLayout;
+        assert drawer != null;
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser == null){
+        if(currentUser == null ){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }

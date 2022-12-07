@@ -7,15 +7,15 @@
         <item
             android:id="@+id/nav_pending"
             android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
+            android:title="@string/menu_pending" />
         <item
             android:id="@+id/nav_completed"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:title="@string/menu_completed" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_newnotification"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:title="@string/menu_newnotification" />
         <item
             android:id="@+id/nav_signout"
             android:icon="@drawable/ic_menu_signout"
