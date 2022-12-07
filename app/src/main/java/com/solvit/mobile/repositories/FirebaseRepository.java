@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class NotificationRepository<T> {
+public class FirebaseRepository<T> {
 
-    private static com.solvit.mobile.repositories.NotificationRepository instance;
+    private static FirebaseRepository instance;
     // Firebase connection
     FirebaseFirestore db;
     private MutableLiveData<List<T>> notificationsDataSet;
@@ -36,7 +36,7 @@ public class NotificationRepository<T> {
     private
     ListenerRegistration registration;
 
-    public NotificationRepository() {
+    public FirebaseRepository() {
         this.db = FirebaseFirestore.getInstance();
         this.notificationsDataSet = new MutableLiveData<>();
         this.userInfo = new MutableLiveData<>();

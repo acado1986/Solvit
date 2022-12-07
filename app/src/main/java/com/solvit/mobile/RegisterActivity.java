@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.solvit.mobile.model.Role;
 import com.solvit.mobile.model.UserInfo;
-import com.solvit.mobile.repositories.NotificationRepository;
+import com.solvit.mobile.repositories.FirebaseRepository;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -33,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etRegPassword;
     private EditText etRegPasswordConfirm;
     private Spinner spRegister;
-    private NotificationRepository mRepo;
+    private FirebaseRepository mRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         mAuth = FirebaseAuth.getInstance();
-        mRepo = new NotificationRepository();
+        mRepo = new FirebaseRepository();
 
         btnRegister = findViewById(R.id.btnRegister);
         etRegEmail = findViewById(R.id.etRegEmail);

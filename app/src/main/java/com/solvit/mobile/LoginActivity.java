@@ -20,7 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.solvit.mobile.model.UserInfo;
-import com.solvit.mobile.repositories.NotificationRepository;
+import com.solvit.mobile.repositories.FirebaseRepository;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etPassword;
     private TextView tvForgetPassword;
     private TextView tvSignUp;
-    private NotificationRepository mRepo;
+    private FirebaseRepository mRepo;
     private MutableLiveData<UserInfo> userInfo;
 
     @Override
@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        mRepo = new NotificationRepository<>();
+        mRepo = new FirebaseRepository<>();
         userInfo = new MutableLiveData<>();
 
         btnSignIn = findViewById(R.id.btnSignIn);

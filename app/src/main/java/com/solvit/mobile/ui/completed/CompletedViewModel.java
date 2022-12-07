@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.solvit.mobile.model.Completed;
 import com.solvit.mobile.model.NotificationModelIT;
-import com.solvit.mobile.repositories.NotificationRepository;
+import com.solvit.mobile.repositories.FirebaseRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,10 +18,10 @@ import java.util.List;
 public class CompletedViewModel extends ViewModel {
 
     private MutableLiveData<List<NotificationModelIT>> notificationsLiveData;
-    private NotificationRepository mRepo;
+    private FirebaseRepository mRepo;
 
     public CompletedViewModel() {
-        mRepo = new NotificationRepository<NotificationModelIT>();
+        mRepo = new FirebaseRepository<NotificationModelIT>();
         notificationsLiveData = mRepo.getNotificationsDataSet();
         mRepo.startNotificationsChangeListener(
                 "events/it/it_events",

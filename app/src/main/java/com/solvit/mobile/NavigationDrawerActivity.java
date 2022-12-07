@@ -1,6 +1,5 @@
 package com.solvit.mobile;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,11 +8,8 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
@@ -28,12 +24,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.solvit.mobile.databinding.ActivityNavigationDrawerBinding;
-import com.solvit.mobile.model.UserInfo;
-import com.solvit.mobile.repositories.NotificationRepository;
+import com.solvit.mobile.repositories.FirebaseRepository;
 import com.solvit.mobile.ui.completed.CompletedFragment;
 import com.solvit.mobile.ui.newnotification.NewNotificationFragment;
 import com.solvit.mobile.ui.pending.PendingFragment;
-import com.solvit.mobile.ui.pending.PendingViewModel;
 
 
 public class NavigationDrawerActivity extends AppCompatActivity {
@@ -42,7 +36,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavigationDrawerBinding binding;
     private FirebaseAuth mAuth;
-    private NotificationRepository mRepo;
+    private FirebaseRepository mRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +44,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
         // check if the user is logged in
         mAuth = FirebaseAuth.getInstance();
-        mRepo = new NotificationRepository();
+        mRepo = new FirebaseRepository();
         binding = ActivityNavigationDrawerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
