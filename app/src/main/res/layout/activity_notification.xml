@@ -8,16 +8,16 @@
     tools:context=".NotificationActivity">
 
     <EditText
-        android:id="@+id/etBuildingNotification"
+        android:id="@+id/tvNameUser"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="14sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvRoomNotification"
-        app:layout_constraintEnd_toStartOf="@+id/tvRoomNotification"
-        app:layout_constraintStart_toEndOf="@+id/tvBuildingNotification"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvSurnameProfile"
+        app:layout_constraintEnd_toStartOf="@+id/tvSurnameProfile"
+        app:layout_constraintStart_toEndOf="@+id/tvNameProfile"
         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     <TextView
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvUserNotification"
+        android:id="@+id/tvUserProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="21dp"
@@ -54,13 +54,13 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/etBuildingNotification"
-        app:layout_constraintEnd_toStartOf="@+id/tvRoleNotification"
-        app:layout_constraintStart_toEndOf="@+id/tvUserNotification"
+        app:layout_constraintBottom_toTopOf="@+id/tvNameUser"
+        app:layout_constraintEnd_toStartOf="@+id/tvRoleProfile"
+        app:layout_constraintStart_toEndOf="@+id/tvUserProfile"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
-        android:id="@+id/tvRoleNotification"
+        android:id="@+id/tvRoleProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="9dp"
@@ -78,35 +78,35 @@
         android:layout_marginTop="106dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvRoleNotification"
+        app:layout_constraintStart_toEndOf="@+id/tvRoleProfile"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
-        android:id="@+id/tvBuildingNotification"
+        android:id="@+id/tvNameProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:text="Edificio : "
         android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etBuildingNotification"
-        app:layout_constraintEnd_toStartOf="@+id/etBuildingNotification"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvNameUser"
+        app:layout_constraintEnd_toStartOf="@+id/tvNameUser"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/tvRoomNotification"
+        android:id="@+id/tvSurnameProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="5dp"
         android:text="Room : "
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/etRoomNotification"
-        app:layout_constraintEnd_toStartOf="@+id/etRoomNotification"
-        app:layout_constraintStart_toEndOf="@+id/etBuildingNotification" />
+        app:layout_constraintBottom_toBottomOf="@+id/tvSurnameUser"
+        app:layout_constraintEnd_toStartOf="@+id/tvSurnameUser"
+        app:layout_constraintStart_toEndOf="@+id/tvNameUser" />
 
     <EditText
-        android:id="@+id/etRoomNotification"
+        android:id="@+id/tvSurnameUser"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -115,22 +115,22 @@
         android:inputType="textPersonName"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvRoomNotification"
+        app:layout_constraintStart_toEndOf="@+id/tvSurnameProfile"
         app:layout_constraintTop_toBottomOf="@+id/spRoleNotification"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
-        android:id="@+id/tvDescriptionNotification"
+        android:id="@+id/tvTelefoneProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:text="Descripción : "
         android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etDescriptionNotification"
+        app:layout_constraintBaseline_toBaselineOf="@+id/etTelefonoUser"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/etDescriptionNotification"
+        android:id="@+id/etTelefonoUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
@@ -138,8 +138,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/tvDescriptionNotification"
-        app:layout_constraintTop_toBottomOf="@+id/etBuildingNotification"
+        app:layout_constraintStart_toEndOf="@+id/tvTelefoneProfile"
+        app:layout_constraintTop_toBottomOf="@+id/tvNameUser"
         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     <TextView
@@ -155,7 +155,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnSaveNotification"
         app:layout_constraintEnd_toStartOf="@+id/spCompletedNotification"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRoomNotification" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSurnameProfile" />
 
     <Spinner
         android:id="@+id/spCompletedNotification"
@@ -168,7 +168,7 @@
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <Button
-        android:id="@+id/btnSendNotification"
+        android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="62dp"
