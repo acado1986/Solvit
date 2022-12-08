@@ -1,4 +1,4 @@
-package com.solvit.mobile.ui.completed;
+package com.solvit.mobile.ui.fragments.completed;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.solvit.mobile.model.Completed;
-import com.solvit.mobile.model.NotificationModelIT;
+import com.solvit.mobile.model.NotificationModel;
 import com.solvit.mobile.repositories.FirebaseRepository;
 
 import java.util.HashMap;
@@ -17,20 +17,20 @@ import java.util.List;
 
 public class CompletedViewModel extends ViewModel {
 
-    private MutableLiveData<List<NotificationModelIT>> notificationsLiveData;
-    private FirebaseRepository mRepo;
+    private MutableLiveData<List<NotificationModel>> notificationsLiveData;
+    private FirebaseRepository<NotificationModel> mRepo;
 
     public CompletedViewModel() {
-        mRepo = new FirebaseRepository<NotificationModelIT>();
-        notificationsLiveData = mRepo.getNotificationsDataSet();
-        mRepo.startNotificationsChangeListener(
+        mRepo = new FirebaseRepository<NotificationModel>();
+        notificationsLiveData = mRepo.getDataSet();
+        mRepo.startChangeListener(
                 "events/it/it_events",
                 new HashMap<String, String>(){{put("completed", Completed.ADMIN.toString());}},
-                NotificationModelIT.class);
+                NotificationModel.class);
         Log.d(TAG, "CompletedViewModel: new model");
     }
 
-    public LiveData<List<NotificationModelIT>> getNotificationsLiveData() {
+    public LiveData<List<NotificationModel>> getNotificationsLiveData() {
 
         return notificationsLiveData;
     }

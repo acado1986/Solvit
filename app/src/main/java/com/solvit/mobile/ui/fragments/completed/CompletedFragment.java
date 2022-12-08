@@ -1,4 +1,4 @@
-package com.solvit.mobile.ui.completed;
+package com.solvit.mobile.ui.fragments.completed;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,11 +18,10 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.solvit.mobile.adminit.NotificationAdapter;
-import com.solvit.mobile.adminit.NotificationDetailsAdminIT;
+import com.solvit.mobile.adapters.NotificationAdapter;
+import com.solvit.mobile.activities.NotificationDetailsActivity;
 import com.solvit.mobile.databinding.FragmentCompletedBinding;
-import com.solvit.mobile.model.Completed;
-import com.solvit.mobile.model.NotificationModelIT;
+import com.solvit.mobile.model.NotificationModel;
 
 import java.util.List;
 
@@ -42,11 +40,11 @@ public class CompletedFragment extends Fragment {
         View root = binding.getRoot();
         rvCompletedNotifications = binding.rvCompletedNotifications;
 
-        completedViewModel.getNotificationsLiveData().observe(getViewLifecycleOwner(), new Observer<List<NotificationModelIT>>() {
+        completedViewModel.getNotificationsLiveData().observe(getViewLifecycleOwner(), new Observer<List<NotificationModel>>() {
             @Override
-            public void onChanged(List<NotificationModelIT> notificationModelITList) {
-                Log.d(TAG, "onChanged: inside" + notificationModelITList);
-                updateRecyclerView(notificationModelITList);
+            public void onChanged(List<NotificationModel> notificationModelList) {
+                Log.d(TAG, "onChanged: inside" + notificationModelList);
+                updateRecyclerView(notificationModelList);
             }
         });
         return root;
@@ -58,12 +56,12 @@ public class CompletedFragment extends Fragment {
         binding = null;
     }
 
-    private void updateRecyclerView(List<NotificationModelIT> notificationModelITList){
-        adapter = new NotificationAdapter(getActivity().getApplicationContext(), notificationModelITList, new NotificationAdapter.OnItemClickListener() {
+    private void updateRecyclerView(List<NotificationModel> notificationModelList){
+        adapter = new NotificationAdapter(getActivity().getApplicationContext(), notificationModelList, new NotificationAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(NotificationModelIT notification) {
+            public void onItemClick(NotificationModel notification) {
                 // get to notifications activity
-                Intent intent = new Intent(getActivity(), NotificationDetailsAdminIT.class);
+                Intent intent = new Intent(getActivity(), NotificationDetailsActivity.class);
                 Log.d(ContentValues.TAG, String.valueOf(notification));
                 intent.putExtra("notification", notification);
                 startActivity(intent);

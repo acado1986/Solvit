@@ -1,4 +1,4 @@
-package com.solvit.mobile;
+package com.solvit.mobile.activities;
 
 import static android.content.ContentValues.TAG;
 
@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.solvit.mobile.R;
 import com.solvit.mobile.model.Role;
 import com.solvit.mobile.model.UserInfo;
 import com.solvit.mobile.repositories.FirebaseRepository;
@@ -76,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     // Register success
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                                    UserInfo userInfo = new UserInfo(firebaseUser.getEmail(), Role.valueOf(spRegister.getSelectedItem().toString()), false);
+                                    UserInfo userInfo = new UserInfo(firebaseUser, Role.valueOf(spRegister.getSelectedItem().toString()), false);
                                     mRepo.createUserInfo(firebaseUser.getUid(), userInfo);
 
                                     // inform the user about the administrator checks

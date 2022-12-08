@@ -1,4 +1,4 @@
-package com.solvit.mobile;
+package com.solvit.mobile.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,9 +15,9 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // This method will be executed once the timer is over
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent intent = new Intent(SplashActivity.this, NavigationDrawerActivity.class);
                 startActivity(intent);
-                finish();
+                finishAffinity();
             }
         }, 1000);
     }

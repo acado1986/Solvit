@@ -1,7 +1,9 @@
-package com.solvit.mobile;
+package com.solvit.mobile.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,11 +25,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.solvit.mobile.R;
 import com.solvit.mobile.databinding.ActivityNavigationDrawerBinding;
 import com.solvit.mobile.repositories.FirebaseRepository;
-import com.solvit.mobile.ui.completed.CompletedFragment;
-import com.solvit.mobile.ui.newnotification.NewNotificationFragment;
-import com.solvit.mobile.ui.pending.PendingFragment;
+import com.solvit.mobile.ui.fragments.completed.CompletedFragment;
+import com.solvit.mobile.ui.fragments.newnotification.NewNotificationFragment;
+import com.solvit.mobile.ui.fragments.pending.PendingFragment;
 
 
 public class NavigationDrawerActivity extends AppCompatActivity {
@@ -54,7 +57,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_pending, R.id.nav_completed, R.id.nav_newnotification, R.id.nav_signout)
+                R.id.nav_pending, R.id.nav_completed, R.id.nav_users, R.id.nav_newnotification, R.id.nav_signout)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation_drawer);
@@ -117,6 +120,21 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                // opens in a new stack avoids reapearing when the backbutton is pressed
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
