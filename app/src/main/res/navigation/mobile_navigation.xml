@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_pending"
-        android:name="com.solvit.mobile.ui.pending.PendingFragment"
+        android:name="com.solvit.mobile.ui.fragments.pending.PendingFragment"
         android:label="@string/menu_pending"
         tools:layout="@layout/fragment_pending" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/nav_completed"
-        android:name="com.solvit.mobile.ui.completed.CompletedFragment"
+        android:name="com.solvit.mobile.ui.fragments.completed.CompletedFragment"
         android:label="@string/menu_completed"
         tools:layout="@layout/fragment_completed" >
         <action
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/nav_newnotification"
-        android:name="com.solvit.mobile.ui.newnotification.NewNotificationFragment"
+        android:name="com.solvit.mobile.ui.fragments.newnotification.NewNotificationFragment"
         android:label="@string/menu_newnotification"
         tools:layout="@layout/fragment_newnotification" >
         <action
@@ -39,12 +39,12 @@
     </fragment>
     <activity
         android:id="@+id/nav_signout"
-        android:name="com.solvit.mobile.LoginActivity"
+        android:name="com.solvit.mobile.activities.LoginActivity"
         android:label="activity_login"
-        tools:layout="@layout/activity_login2" />
+        tools:layout="@layout/activity_login" />
     <fragment
         android:id="@+id/nav_users"
-        android:name="com.solvit.mobile.ui.users.UsersFragment"
+        android:name="com.solvit.mobile.ui.fragments.users.UsersFragment"
         android:label="@string/menu_users"
         tools:layout="@layout/fragment_users" >
         <action

@@ -1,4 +1,4 @@
-package com.solvit.mobile.adminit;
+package com.solvit.mobile.activities;
 
 import static android.content.ContentValues.TAG;
 
@@ -14,18 +14,14 @@ import android.widget.TextView;
 
 import com.solvit.mobile.R;
 import com.solvit.mobile.model.NotificationModel;
-import com.solvit.mobile.model.NotificationModelIT;
 import com.solvit.mobile.model.UserInfo;
 import com.solvit.mobile.repositories.FirebaseRepository;
 
-import java.text.CollationElementIterator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class NotificationDetailsAdminIT extends AppCompatActivity {
+public class NotificationDetailsActivity extends AppCompatActivity {
 
     TextView tvRole;
     Spinner spSpinner;
@@ -35,7 +31,7 @@ public class NotificationDetailsAdminIT extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification_details_admin_it);
+        setContentView(R.layout.activity_notification_details);
 
         tvRole = findViewById(R.id.tvRole);
         spSpinner=findViewById(R.id.spSpinner);

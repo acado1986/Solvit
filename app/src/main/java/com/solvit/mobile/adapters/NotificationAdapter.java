@@ -1,4 +1,4 @@
-package com.solvit.mobile.adminit;
+package com.solvit.mobile.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

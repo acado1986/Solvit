@@ -1,4 +1,4 @@
-package com.solvit.mobile.ui.users;
+package com.solvit.mobile.ui.fragments.users;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 

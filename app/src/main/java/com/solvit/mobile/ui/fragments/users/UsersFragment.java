@@ -1,4 +1,4 @@
-package com.solvit.mobile.ui.users;
+package com.solvit.mobile.ui.fragments.users;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
@@ -23,7 +23,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.solvit.mobile.R;
-import com.solvit.mobile.adminit.UserAdapter;
+import com.solvit.mobile.adapters.UserAdapter;
 import com.solvit.mobile.databinding.FragmentUsersBinding;
 import com.solvit.mobile.model.UserInfo;
 

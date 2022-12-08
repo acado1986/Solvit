@@ -1,4 +1,4 @@
-package com.solvit.mobile.ui.pending;
+package com.solvit.mobile.ui.fragments.pending;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 

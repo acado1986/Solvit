@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/wallpaper2"
-    tools:context=".ui.newnotification.NewNotificationFragment"
+    tools:context=".ui.fragments.newnotification.NewNotificationFragment"
     tools:layout_editor_absoluteX="9dp"
     tools:layout_editor_absoluteY="130dp">
 

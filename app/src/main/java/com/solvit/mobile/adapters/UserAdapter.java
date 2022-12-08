@@ -1,9 +1,8 @@
-package com.solvit.mobile.adminit;
+package com.solvit.mobile.adapters;
 
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +17,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.solvit.mobile.R;
-import com.solvit.mobile.model.NotificationModelIT;
 import com.solvit.mobile.model.Role;
 import com.solvit.mobile.model.UserInfo;
 
 import java.util.List;
-
-import javax.security.auth.callback.Callback;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 

@@ -1,4 +1,4 @@
-package com.solvit.mobile;
+package com.solvit.mobile.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -1,4 +1,4 @@
-package com.solvit.mobile.ui.newnotification;
+package com.solvit.mobile.ui.fragments.newnotification;
 
 import android.text.TextUtils;
 

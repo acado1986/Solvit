@@ -1,4 +1,4 @@
-package com.solvit.mobile;
+package com.solvit.mobile.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -25,11 +25,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.solvit.mobile.R;
 import com.solvit.mobile.databinding.ActivityNavigationDrawerBinding;
 import com.solvit.mobile.repositories.FirebaseRepository;
-import com.solvit.mobile.ui.completed.CompletedFragment;
-import com.solvit.mobile.ui.newnotification.NewNotificationFragment;
-import com.solvit.mobile.ui.pending.PendingFragment;
+import com.solvit.mobile.ui.fragments.completed.CompletedFragment;
+import com.solvit.mobile.ui.fragments.newnotification.NewNotificationFragment;
+import com.solvit.mobile.ui.fragments.pending.PendingFragment;
 
 
 public class NavigationDrawerActivity extends AppCompatActivity {
