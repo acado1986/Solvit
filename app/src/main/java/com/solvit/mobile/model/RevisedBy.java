@@ -1,5 +1,5 @@
 package com.solvit.mobile.model;
 
-public enum Completed {
+public enum RevisedBy {
     ADMIN, WORKER;
 }

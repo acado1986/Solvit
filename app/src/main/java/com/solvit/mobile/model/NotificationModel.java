@@ -6,41 +6,42 @@ import java.util.List;
 public class NotificationModel implements Serializable {
 
     private String id;
-    private Completed completed;
-    private boolean pending;
-    private Role role;
+    private RevisedBy revisedBy;
+    private boolean finished;
     private String title;
     private String room;
     private String building;
     private String description;
     private String user;
+    private long pcNumber;
     private List<String> fowardTo;
+
 
     public NotificationModel() {
     }
 
-    public NotificationModel(String id, Completed completed, boolean pending, Role role, String title, String room, String building, String description, String user, List<String> fowardTo) {
+    public NotificationModel(String id, RevisedBy revisedBy, boolean finished, String title, String room, String building, String description, String user, long pcNumber, List<String> fowardTo) {
         this.id = id;
-        this.completed = completed;
-        this.pending = pending;
-        this.role = role;
+        this.revisedBy = revisedBy;
+        this.finished = finished;
         this.title = title;
         this.room = room;
         this.building = building;
         this.description = description;
         this.user = user;
+        this.pcNumber = pcNumber;
         this.fowardTo = fowardTo;
     }
 
-    public NotificationModel(Completed completed, boolean pending, Role role, String title, String room, String building, String description, String user, List<String> fowardTo) {
-        this.completed = completed;
-        this.role = role;
-        this.pending = pending;
+    public NotificationModel(RevisedBy revisedBy, boolean finished, String title, String room, String building, String description, String user, long pcNumber, List<String> fowardTo) {
+        this.revisedBy = revisedBy;
+        this.finished = finished;
         this.title = title;
         this.room = room;
         this.building = building;
         this.description = description;
         this.user = user;
+        this.pcNumber = pcNumber;
         this.fowardTo = fowardTo;
     }
 
@@ -52,20 +53,12 @@ public class NotificationModel implements Serializable {
         this.id = id;
     }
 
-    public Completed getCompleted() {
-        return completed;
+    public RevisedBy getRevisedBy() {
+        return revisedBy;
     }
 
-    public void setCompleted(Completed completed) {
-        this.completed = completed;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRevisedBy(RevisedBy revisedBy) {
+        this.revisedBy = revisedBy;
     }
 
     public String getRoom() {
@@ -112,7 +105,11 @@ public class NotificationModel implements Serializable {
 
     public void setTitle(String title) {this.title = title;}
 
-    public boolean isPending() {return pending;}
+    public boolean isFinished() {return finished;}
 
-    public void setPending(boolean pending) {this.pending = pending;}
+    public void setFinished(boolean finished) {this.finished = finished;}
+
+    public long getPcNumber() {return pcNumber;}
+
+    public void setPcNumber(long pcNumber) {this.pcNumber = pcNumber;}
 }

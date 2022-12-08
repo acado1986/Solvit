@@ -53,7 +53,5 @@ public class NotificationDetailsActivity extends AppCompatActivity {
         });
 
         NotificationModel notification = (NotificationModel)getIntent().getSerializableExtra("notification");
-        tvRole.setText(notification.getRole().toString());
-
-    }
+          }
 }

@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.solvit.mobile.model.Completed;
 import com.solvit.mobile.model.UserInfo;
 import com.solvit.mobile.repositories.FirebaseRepository;
 

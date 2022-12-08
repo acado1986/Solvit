@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.solvit.mobile.model.Completed;
+import com.solvit.mobile.model.RevisedBy;
 import com.solvit.mobile.model.NotificationModel;
 import com.solvit.mobile.repositories.FirebaseRepository;
 
@@ -25,7 +25,7 @@ public class CompletedViewModel extends ViewModel {
         notificationsLiveData = mRepo.getDataSet();
         mRepo.startChangeListener(
                 "events/it/it_events",
-                new HashMap<String, String>(){{put("completed", Completed.ADMIN.toString());}},
+                new HashMap<String, String>(){{put("completed", RevisedBy.ADMIN.toString());}},
                 NotificationModel.class);
         Log.d(TAG, "CompletedViewModel: new model");
     }
