@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * Aditional user information
  */
-public class UserInfo implements com.google.firebase.auth.UserInfo, Serializable {
+public class UserInfo implements com.google.firebase.auth.UserInfo, Serializable, Uid {
 
     private Role role;
     private boolean active;

@@ -21,6 +21,7 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.solvit.mobile.model.Uid;
 import com.solvit.mobile.model.UserInfo;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FirebaseRepository<T> {
+public class FirebaseRepository<T extends Uid> {
 
     // Firebase connection
     private FirebaseFirestore db;
@@ -68,12 +69,13 @@ public class FirebaseRepository<T> {
                             Log.w(TAG, "listen:error ", error);
                             return;
                         }
-                        List<T> notificationsList = new ArrayList<>();
+                        List<T> dataList = new ArrayList<>();
                         for (QueryDocumentSnapshot document : value) {
-                            T notification = document.toObject(cls);
-                            notificationsList.add(notification);
+                            T aData = document.toObject(cls);
+                            aData.setUid(document.getId());
+                            dataList.add(aData);
                         }
-                        dataSet.postValue(notificationsList);
+                        dataSet.postValue(dataList);
                     }
                 });
     }
@@ -97,6 +99,7 @@ public class FirebaseRepository<T> {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "Document created with ID: " + refId);
+
                         } else {
                             Log.e(TAG, "Error adding document");
                         }

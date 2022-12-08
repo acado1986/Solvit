@@ -3,7 +3,7 @@ package com.solvit.mobile.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class NotificationModel implements Serializable {
+public class NotificationModel implements Uid, Serializable {
 
     private String id;
     private RevisedBy revisedBy;
@@ -45,11 +45,11 @@ public class NotificationModel implements Serializable {
         this.fowardTo = fowardTo;
     }
 
-    public String getId() {
+    public String getUid() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setUid(String id) {
         this.id = id;
     }
 
