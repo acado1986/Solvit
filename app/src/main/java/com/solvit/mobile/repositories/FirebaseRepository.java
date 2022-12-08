@@ -66,7 +66,7 @@ public class FirebaseRepository<T> {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null) {
-                            Log.w(TAG, "listen:error", error);
+                            Log.w(TAG, "listen:error ", error);
                             return;
                         }
                         List<T> notificationsList = new ArrayList<>();
