@@ -12,15 +12,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.solvit.mobile.model.Uid;
 import com.solvit.mobile.model.UserInfo;
 
@@ -93,7 +99,7 @@ public class FirebaseRepository<T extends Uid> {
         } else {
             docRef = db.collection(collectionPath).document();
         }
-       docRef.set(data)
+       docRef.set(data, SetOptions.merge())
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -105,6 +111,28 @@ public class FirebaseRepository<T extends Uid> {
                         }
                     }
                 });
+        docRef.update("updatedAt", FieldValue.serverTimestamp());
+    }
+
+    public void deleteData(String refId, String collectionPath){
+        DocumentReference docRef;
+        if(refId != null) {
+            docRef = db.collection(collectionPath).document(refId);
+
+            docRef.delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error deleting document", e);
+                        }
+                    });
+        }
     }
 
     public void checkUserInfo(String userUid, Class<T> cls){
@@ -148,5 +176,33 @@ public class FirebaseRepository<T extends Uid> {
                         Log.w(TAG, "Error updating document", e);
                     }
                 });
+    }
+
+    public void updateUser(UserInfo userInfo){
+        UserProfileChangeRequest userProfile = new UserProfileChangeRequest.Builder()
+                .setDisplayName(userInfo.getDisplayName())
+                .setPhotoUri(userInfo.getPhotoUrl())
+                .build();
+        FirebaseAuth.getInstance().getCurrentUser().updateProfile(userProfile)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "User profile updated.");
+                    }
+                });
+
+        DocumentReference docRef = FirebaseFirestore.getInstance().collection("users").document(userInfo.getUid());
+        docRef.set(userInfo, SetOptions.merge())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User created with ID: " + docRef.getId());
+
+                        } else {
+                            Log.e(TAG, "Error adding document");
+                        }
+                    }
+                });
+        docRef.update("updatedAt", FieldValue.serverTimestamp());
     }
 }

@@ -6,39 +6,67 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.solvit.mobile.R;
 import com.solvit.mobile.model.NotificationModel;
+import com.solvit.mobile.model.NotificationType;
+import com.solvit.mobile.model.RevisedBy;
+import com.solvit.mobile.model.Status;
 import com.solvit.mobile.model.UserInfo;
 import com.solvit.mobile.repositories.FirebaseRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class NotificationDetailsActivity extends AppCompatActivity {
 
-    TextView tvRole;
-    Spinner spSpinner;
-    private FirebaseRepository<UserInfo> mRepo;
-    String[]users={"adminIT","admin,Maintenance","AdminSecrtary","worker IT 1","worker IT 2",
-    "worker maintenance 1","worker maintenance 2","worker secretary 1","worker secretary 2"};
+    private EditText etDetailsUser;
+    private EditText etDetailsBuilding;
+    private EditText etDetailsRoom;
+    private EditText etDetailsDescription;
+    private EditText etDetailsPcNumber;
+    private Spinner spDetailsStatus;
+    private Spinner spDetailsRevisedBy;
+    private Spinner spDetailsFowardTo;
+    private Button btnSend;
+    private Button btnDelete;
+
+
+    private FirebaseRepository<UserInfo> mRepoUsers;
+    private FirebaseRepository<NotificationModel> mRepoNotifications;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_details);
 
-        tvRole = findViewById(R.id.tvRole);
-        spSpinner=findViewById(R.id.spSpinner);
+        etDetailsUser = findViewById(R.id.etDetailsUser);
+        etDetailsBuilding = findViewById(R.id.etDetailsBuild);
+        etDetailsRoom = findViewById(R.id.etDetailsRoom);
+        etDetailsDescription = findViewById(R.id.etDetailsDescription);
+        etDetailsPcNumber = findViewById(R.id.etDetailsPcNumber);
+        spDetailsStatus = findViewById(R.id.spDetailsStatus);
+        spDetailsRevisedBy = findViewById(R.id.spDetailsRevisedBy);
+        spDetailsFowardTo = findViewById(R.id.spDetailsFowardTo);
+        btnSend = findViewById(R.id.btnSend);
+        btnDelete = findViewById(R.id.btnDeleteNotification);
+
         // get user list
-        mRepo = new FirebaseRepository<>();
-        LiveData<List<UserInfo>> usersInfo = mRepo.getDataSet();
-        mRepo.startChangeListener("users",
+        mRepoUsers = new FirebaseRepository<>();
+        mRepoNotifications = new FirebaseRepository<>();
+        LiveData<List<UserInfo>> usersInfo = mRepoUsers.getDataSet();
+        mRepoUsers.startChangeListener("users",
                 new HashMap<String,String>(),
                 UserInfo.class);
         usersInfo.observe(this, new Observer<List<UserInfo>>() {
@@ -48,10 +76,51 @@ public class NotificationDetailsActivity extends AppCompatActivity {
                 userInfos.stream().forEach(e->nombres.put(e.getUid(), e.getDisplayName() == null? e.getEmail() : e.getDisplayName()));
                 Log.d(TAG, "onChangedactivity: " + nombres);
                 ArrayAdapter<String> adapter=new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, new ArrayList(nombres.values()));
-                spSpinner.setAdapter(adapter);
+                spDetailsFowardTo.setAdapter(adapter);
             }
         });
 
+        // set the spinners data
+        spDetailsStatus.setAdapter(new ArrayAdapter<Status>(this, android.R.layout.simple_spinner_dropdown_item, Status.values()));
+        spDetailsRevisedBy.setAdapter(new ArrayAdapter<RevisedBy>(this, android.R.layout.simple_spinner_dropdown_item, RevisedBy.values()));
+
+
+
         NotificationModel notification = (NotificationModel)getIntent().getSerializableExtra("notification");
-          }
+
+        setNotificationDetails(notification);
+
+        btnSend.setOnClickListener(view -> {
+            resetNotificationDetails(notification);
+            mRepoNotifications.writeData(notification.getUid(), "events/it/it_events", notification);
+            Toast.makeText(this, "Se ha modificado los detalles de la notification", Toast.LENGTH_SHORT).show();
+        });
+
+        btnDelete.setOnClickListener(view1 -> {
+            mRepoNotifications.deleteData(notification.getUid(), "events/it/it_events");
+            Toast.makeText(this, "Notifiacion borrada", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, NavigationDrawerActivity.class));
+        });
+
+    }
+
+    private void resetNotificationDetails(NotificationModel notification) {
+        notification.setBuilding(etDetailsBuilding.getText().toString());
+        notification.setRoom(etDetailsRoom.getText().toString());
+        notification.setDescription(etDetailsDescription.getText().toString());
+        notification.setPcNumber(Long.valueOf(etDetailsPcNumber.getText().toString()));
+        notification.setStatus(spDetailsStatus.getSelectedItem().toString());
+        notification.setRevisedBy(spDetailsRevisedBy.getSelectedItem().toString());
+        notification.setFowardTo(new ArrayList<String>(){{add(spDetailsFowardTo.getSelectedItem().toString());}});
+    }
+
+    private void setNotificationDetails(NotificationModel notification) {
+        etDetailsUser.setText(notification.getUser());
+        etDetailsBuilding.setText(notification.getBuilding());
+        etDetailsRoom.setText(notification.getRoom());
+        etDetailsDescription.setText(notification.getDescription());
+        etDetailsPcNumber.setText(String.valueOf(notification.getPcNumber()));
+        spDetailsStatus.setSelection(Status.valueOf(notification.getStatus()).ordinal());
+        spDetailsRevisedBy.setSelection(RevisedBy.valueOf(notification.getRevisedBy()).ordinal());
+    }
 }

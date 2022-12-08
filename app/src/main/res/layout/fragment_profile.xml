@@ -5,19 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/wallpaper2"
-    tools:context=".NotificationActivity">
+    tools:context=".ui.fragments.profile.ProfileFragment">
 
-    <TextView
-        android:id="@+id/tvNameUser"
+    <EditText
+        android:id="@+id/etDisplayNameProfile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="6dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="173dp"
         android:layout_marginBottom="38dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/etTelefonoUser"
-        app:layout_constraintEnd_toStartOf="@+id/tvSurnameProfile"
+        app:layout_constraintBottom_toTopOf="@+id/etPhoneUserProfile"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvNameProfile"
         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
@@ -35,14 +36,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvUserProfile"
+        android:id="@+id/tvUserProfileText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Usuario : "
         android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvUserUser"
-        app:layout_constraintEnd_toStartOf="@+id/tvUserUser"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvEmailProfile"
+        app:layout_constraintEnd_toStartOf="@+id/tvEmailProfile"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -52,9 +53,9 @@
         android:layout_marginEnd="23dp"
         android:text="Role : "
         android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvUserUser"
-        app:layout_constraintEnd_toStartOf="@+id/tvRoleUser"
-        app:layout_constraintStart_toEndOf="@+id/tvUserUser" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvEmailProfile"
+        app:layout_constraintEnd_toStartOf="@+id/tvRoleUserProfile"
+        app:layout_constraintStart_toEndOf="@+id/tvEmailProfile" />
 
     <TextView
         android:id="@+id/tvNameProfile"
@@ -64,33 +65,9 @@
         android:layout_marginEnd="3dp"
         android:text="Nombre :"
         android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvNameUser"
-        app:layout_constraintEnd_toStartOf="@+id/tvNameUser"
+        app:layout_constraintBaseline_toBaselineOf="@+id/etDisplayNameProfile"
+        app:layout_constraintEnd_toStartOf="@+id/etDisplayNameProfile"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tvSurnameProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
-        android:text="Apellido :"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/tvSurnameUser"
-        app:layout_constraintStart_toEndOf="@+id/tvNameUser"
-        app:layout_constraintTop_toTopOf="@+id/tvNameUser" />
-
-    <TextView
-        android:id="@+id/tvSurnameUser"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvSurnameProfile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvSurnameProfile"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/tvTelefoneProfile"
@@ -100,14 +77,15 @@
         android:layout_marginTop="259dp"
         android:text="Telefono : "
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/etTelefonoUser"
+        app:layout_constraintEnd_toStartOf="@+id/etPhoneUserProfile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/etTelefonoUser"
+        android:id="@+id/etPhoneUserProfile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="203dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -118,29 +96,17 @@
         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     <Button
-        android:id="@+id/btnCancel"
+        android:id="@+id/btnSaveProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="52dp"
-        android:background="@drawable/custombutton"
-        android:text="Cancelar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/btnSaveNotification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginBottom="52dp"
         android:background="@drawable/custombutton"
         android:text="Guardar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivPhtoUserProfile" />
 
     <TextView
-        android:id="@+id/tvRoleUser"
+        android:id="@+id/tvRoleUserProfile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -149,13 +115,14 @@
         app:layout_constraintStart_toEndOf="@+id/tvRoleProfile" />
 
     <TextView
-        android:id="@+id/tvUserUser"
+        android:id="@+id/tvEmailProfile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="53dp"
         android:layout_marginEnd="12dp"
         app:layout_constraintEnd_toStartOf="@+id/tvRoleProfile"
-        app:layout_constraintStart_toEndOf="@+id/tvUserProfile"
+        app:layout_constraintStart_toEndOf="@+id/tvUserProfileText"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <TextView
@@ -167,10 +134,10 @@
         android:text="Foto : "
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etTelefonoUser" />
+        app:layout_constraintTop_toBottomOf="@+id/etPhoneUserProfile" />
 
     <ImageView
-        android:id="@+id/ivPhtoUser"
+        android:id="@+id/ivPhtoUserProfile"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="17dp"

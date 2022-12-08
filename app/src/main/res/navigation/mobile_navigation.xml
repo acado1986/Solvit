@@ -31,11 +31,8 @@
         android:label="@string/menu_newnotification"
         tools:layout="@layout/fragment_newnotification" >
         <action
-            android:id="@+id/action_nav_newnotification_to_nav_pending"
-            app:destination="@id/nav_pending" />
-        <action
-            android:id="@+id/action_nav_newnotification_to_nav_signout"
-            app:destination="@id/nav_signout" />
+            android:id="@+id/action_nav_newnotification_to_profileFragment"
+            app:destination="@id/nav_profile" />
     </fragment>
     <activity
         android:id="@+id/nav_signout"
@@ -50,6 +47,15 @@
         <action
             android:id="@+id/action_usersFragment_to_nav_newnotification"
             app:destination="@id/nav_newnotification" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.solvit.mobile.ui.fragments.profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_nav_signout"
+            app:destination="@id/nav_signout" />
     </fragment>
 
 </navigation>

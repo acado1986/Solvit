@@ -77,7 +77,7 @@ public class NewNotificationFragment extends Fragment {
 
         btnSend.setOnClickListener(view1 -> {
             NotificationModel newNotification = new NotificationModel(
-                    RevisedBy.WORKER, Status.PENDING.toString(),
+                    RevisedBy.WORKER.toString(), Status.PENDING.toString(),
                     title.getText().toString(),
                     room.getText().toString(), building.getText().toString(),
                     description.getText().toString(),

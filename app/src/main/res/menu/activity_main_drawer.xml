@@ -21,6 +21,10 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_newnotification" />
         <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_profile" />
+        <item
             android:id="@+id/nav_signout"
             android:icon="@drawable/ic_menu_signout"
             android:title="@string/sign_out" />

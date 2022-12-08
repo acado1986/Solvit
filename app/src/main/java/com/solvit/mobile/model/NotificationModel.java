@@ -6,7 +6,7 @@ import java.util.List;
 public class NotificationModel implements Uid, Serializable {
 
     private String id;
-    private RevisedBy revisedBy;
+    private String revisedBy;
     private String status;
     private String title;
     private String room;
@@ -20,7 +20,7 @@ public class NotificationModel implements Uid, Serializable {
     public NotificationModel() {
     }
 
-    public NotificationModel(String id, RevisedBy revisedBy, String status, String title, String room, String building, String description, String user, long pcNumber, List<String> fowardTo) {
+    public NotificationModel(String id, String revisedBy, String status, String title, String room, String building, String description, String user, long pcNumber, List<String> fowardTo) {
         this.id = id;
         this.revisedBy = revisedBy;
         this.status = status;
@@ -33,7 +33,7 @@ public class NotificationModel implements Uid, Serializable {
         this.fowardTo = fowardTo;
     }
 
-    public NotificationModel(RevisedBy revisedBy, String status, String title, String room, String building, String description, String user, long pcNumber, List<String> fowardTo) {
+    public NotificationModel(String revisedBy, String status, String title, String room, String building, String description, String user, long pcNumber, List<String> fowardTo) {
         this.revisedBy = revisedBy;
         this.status = status;
         this.title = title;
@@ -53,11 +53,11 @@ public class NotificationModel implements Uid, Serializable {
         this.id = id;
     }
 
-    public RevisedBy getRevisedBy() {
+    public String getRevisedBy() {
         return revisedBy;
     }
 
-    public void setRevisedBy(RevisedBy revisedBy) {
+    public void setRevisedBy(String revisedBy) {
         this.revisedBy = revisedBy;
     }
 
