@@ -56,6 +56,9 @@ public class FirebaseRepository<T> {
     public void startChangeListener(String collectionPath, Map<String, String> whereFilters, Class<T> cls){
         // Create a reference to the cities collection
         query = db.collection(collectionPath);
+        if(query == null){
+            return;
+        }
         for (Map.Entry<String, String> filter: whereFilters.entrySet()) {
             query = query.whereEqualTo(filter.getKey(), filter.getValue());
         }
@@ -123,6 +126,9 @@ public class FirebaseRepository<T> {
     public void activateUser(String userUid, String role, boolean active) {
         Map<String, Object> data = new HashMap<String, Object>(){{put("role", role); put("active", active);}};
         DocumentReference docRef = db.collection("users").document(userUid);
+        if(docRef == null){
+            return;
+        }
         docRef.update(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

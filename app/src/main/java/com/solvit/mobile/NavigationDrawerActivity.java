@@ -126,6 +126,8 @@ public class NavigationDrawerActivity extends AppCompatActivity {
                 Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                 Uri uri = Uri.fromParts("package", getPackageName(), null);
                 intent.setData(uri);
+                // opens in a new stack avoids reapearing when the backbutton is pressed
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 return true;
             default:
