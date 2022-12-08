@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etPassword;
     private TextView tvForgetPassword;
     private TextView tvSignUp;
-    private FirebaseRepository mRepo;
+    private FirebaseRepository<UserInfo> mRepo;
     private MutableLiveData<UserInfo> userInfo;
 
     @Override
@@ -56,8 +56,8 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                mRepo.checkUserInfo(mAuth.getCurrentUser().getUid());
-                                userInfo = mRepo.getUserInfo();
+                                mRepo.checkUserInfo(mAuth.getCurrentUser().getUid(), UserInfo.class);
+                                userInfo = mRepo.getData();
                                 Log.d(TAG, "signInWithEmail:success " + userInfo);
                                 updateUI();
                             } else {

@@ -30,7 +30,7 @@
         android:text="Notificación"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/spRoleNotification"
+        app:layout_constraintEnd_toStartOf="@+id/spNotificationType"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -67,12 +67,12 @@
         android:layout_marginBottom="1dp"
         android:text="Role : "
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/spRoleNotification"
-        app:layout_constraintEnd_toStartOf="@+id/spRoleNotification"
+        app:layout_constraintBottom_toBottomOf="@+id/spNotificationType"
+        app:layout_constraintEnd_toStartOf="@+id/spNotificationType"
         app:layout_constraintStart_toEndOf="@+id/tvUserName" />
 
     <Spinner
-        android:id="@+id/spRoleNotification"
+        android:id="@+id/spNotificationType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="106dp"
@@ -116,7 +116,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvRoomNotification"
-        app:layout_constraintTop_toBottomOf="@+id/spRoleNotification"
+        app:layout_constraintTop_toBottomOf="@+id/spNotificationType"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
@@ -152,7 +152,7 @@
         android:layout_marginBottom="204dp"
         android:text="Completed : "
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btnSaveNotification"
+        app:layout_constraintBottom_toTopOf="@+id/btnCancelNotification"
         app:layout_constraintEnd_toStartOf="@+id/spCompletedNotification"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvRoomNotification" />
@@ -179,7 +179,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/btnSaveNotification"
+        android:id="@+id/btnCancelNotification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"

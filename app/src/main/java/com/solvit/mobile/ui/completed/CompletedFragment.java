@@ -23,7 +23,8 @@ import com.solvit.mobile.adminit.NotificationAdapter;
 import com.solvit.mobile.adminit.NotificationDetailsAdminIT;
 import com.solvit.mobile.databinding.FragmentCompletedBinding;
 import com.solvit.mobile.model.Completed;
-import com.solvit.mobile.model.NotificationModelIT;
+import com.solvit.mobile.model.NotificationModel;
+import com.solvit.mobile.model.NotificationModel;
 
 import java.util.List;
 
@@ -42,11 +43,11 @@ public class CompletedFragment extends Fragment {
         View root = binding.getRoot();
         rvCompletedNotifications = binding.rvCompletedNotifications;
 
-        completedViewModel.getNotificationsLiveData().observe(getViewLifecycleOwner(), new Observer<List<NotificationModelIT>>() {
+        completedViewModel.getNotificationsLiveData().observe(getViewLifecycleOwner(), new Observer<List<NotificationModel>>() {
             @Override
-            public void onChanged(List<NotificationModelIT> notificationModelITList) {
-                Log.d(TAG, "onChanged: inside" + notificationModelITList);
-                updateRecyclerView(notificationModelITList);
+            public void onChanged(List<NotificationModel> notificationModelList) {
+                Log.d(TAG, "onChanged: inside" + notificationModelList);
+                updateRecyclerView(notificationModelList);
             }
         });
         return root;
@@ -58,10 +59,10 @@ public class CompletedFragment extends Fragment {
         binding = null;
     }
 
-    private void updateRecyclerView(List<NotificationModelIT> notificationModelITList){
-        adapter = new NotificationAdapter(getActivity().getApplicationContext(), notificationModelITList, new NotificationAdapter.OnItemClickListener() {
+    private void updateRecyclerView(List<NotificationModel> notificationModelList){
+        adapter = new NotificationAdapter(getActivity().getApplicationContext(), notificationModelList, new NotificationAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(NotificationModelIT notification) {
+            public void onItemClick(NotificationModel notification) {
                 // get to notifications activity
                 Intent intent = new Intent(getActivity(), NotificationDetailsAdminIT.class);
                 Log.d(ContentValues.TAG, String.valueOf(notification));

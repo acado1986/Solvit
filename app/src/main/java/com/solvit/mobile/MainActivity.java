@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         btnWriteData.setOnClickListener(view -> {
             db.collection("events/it/it_events")
                     .add(new NotificationModelIT
-                            (Completed.ADMIN, Role.ADMIN, "a12", "Goya", "test de lo que ha pasado", "users/LLlNAwGWxYBsvaWUKbiK", Arrays.asList("users/LLlNAwGWxYBsvaWUKbiK", "users/allrdjZJvsLWZszBv49h"),1))
+                            (Completed.ADMIN, false, Role.ADMIN, "Titulo", "a12", "Goya", "test de lo que ha pasado", "users/LLlNAwGWxYBsvaWUKbiK", Arrays.asList("users/LLlNAwGWxYBsvaWUKbiK", "users/allrdjZJvsLWZszBv49h"),1))
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {

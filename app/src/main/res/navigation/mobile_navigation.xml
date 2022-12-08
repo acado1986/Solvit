@@ -9,13 +9,21 @@
         android:id="@+id/nav_pending"
         android:name="com.solvit.mobile.ui.pending.PendingFragment"
         android:label="@string/menu_pending"
-        tools:layout="@layout/fragment_pending" />
+        tools:layout="@layout/fragment_pending" >
+        <action
+            android:id="@+id/action_nav_pending_to_nav_completed"
+            app:destination="@id/nav_completed" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_completed"
         android:name="com.solvit.mobile.ui.completed.CompletedFragment"
         android:label="@string/menu_completed"
-        tools:layout="@layout/fragment_completed" />
+        tools:layout="@layout/fragment_completed" >
+        <action
+            android:id="@+id/action_nav_completed_to_usersFragment"
+            app:destination="@id/nav_users" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_newnotification"
@@ -25,11 +33,23 @@
         <action
             android:id="@+id/action_nav_newnotification_to_nav_pending"
             app:destination="@id/nav_pending" />
+        <action
+            android:id="@+id/action_nav_newnotification_to_nav_signout"
+            app:destination="@id/nav_signout" />
     </fragment>
     <activity
         android:id="@+id/nav_signout"
         android:name="com.solvit.mobile.LoginActivity"
         android:label="activity_login"
         tools:layout="@layout/activity_login2" />
+    <fragment
+        android:id="@+id/nav_users"
+        android:name="com.solvit.mobile.ui.users.UsersFragment"
+        android:label="@string/menu_users"
+        tools:layout="@layout/fragment_users" >
+        <action
+            android:id="@+id/action_usersFragment_to_nav_newnotification"
+            app:destination="@id/nav_newnotification" />
+    </fragment>
 
 </navigation>

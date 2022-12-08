@@ -13,14 +13,15 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.solvit.mobile.R;
-import com.solvit.mobile.model.NotificationModelIT;
+import com.solvit.mobile.model.NotificationModel;
+import com.solvit.mobile.model.NotificationModel;
 
 import java.util.ArrayList;
 
 public class NotificationPanelAdminITActivity extends AppCompatActivity {
 
 
-    ArrayList<NotificationModelIT> notifications;
+    ArrayList<NotificationModel> notifications;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,12 +30,12 @@ public class NotificationPanelAdminITActivity extends AppCompatActivity {
         // grab de RecycleView
         RecyclerView rvNotifications = findViewById(R.id.rvNotifications);
         // grab the intent extra notificacions array
-        notifications = (ArrayList<NotificationModelIT>)getIntent().getSerializableExtra("notifications");
+        notifications = (ArrayList<NotificationModel>)getIntent().getSerializableExtra("notifications");
         Log.d(TAG, "notificationes" + String.valueOf(notifications.get(0).getRoom()));
 
         NotificationAdapter adapter = new NotificationAdapter(this, notifications, new NotificationAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(NotificationModelIT notification) {
+            public void onItemClick(NotificationModel notification) {
                 Log.d(TAG, "onItemClick: " + notification);
                 // get to notifications activity
                 Intent intent = new Intent(getApplicationContext(), NotificationDetailsAdminIT.class);

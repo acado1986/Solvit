@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -22,6 +24,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.solvit.mobile.model.UserInfo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,28 +33,27 @@ public class FirebaseRepository<T> {
     private static FirebaseRepository instance;
     // Firebase connection
     FirebaseFirestore db;
-    private MutableLiveData<List<T>> notificationsDataSet;
-    private MutableLiveData<UserInfo> userInfo;
+    private MutableLiveData<List<T>> dataSet;
+    private MutableLiveData<T> data;
     private Query query;
-    private
-    ListenerRegistration registration;
+    private ListenerRegistration registration;
 
     public FirebaseRepository() {
         this.db = FirebaseFirestore.getInstance();
-        this.notificationsDataSet = new MutableLiveData<>();
-        this.userInfo = new MutableLiveData<>();
+        this.dataSet = new MutableLiveData<>();
+        this.data = new MutableLiveData<>();
     }
 
 
-    public MutableLiveData<List<T>> getNotificationsDataSet(){
-        return notificationsDataSet;
+    public MutableLiveData<List<T>> getDataSet(){
+        return dataSet;
     }
 
-    public MutableLiveData<UserInfo> getUserInfo() {
-        return userInfo;
+    public MutableLiveData<T> getData() {
+        return data;
     }
 
-    public void startNotificationsChangeListener(String collectionPath, Map<String, String> whereFilters, Class<T> cls){
+    public void startChangeListener(String collectionPath, Map<String, String> whereFilters, Class<T> cls){
         // Create a reference to the cities collection
         query = db.collection(collectionPath);
         for (Map.Entry<String, String> filter: whereFilters.entrySet()) {
@@ -69,7 +71,7 @@ public class FirebaseRepository<T> {
                             T notification = document.toObject(cls);
                             notificationsList.add(notification);
                         }
-                        notificationsDataSet.postValue(notificationsList);
+                        dataSet.postValue(notificationsList);
                     }
                 });
     }
@@ -96,8 +98,8 @@ public class FirebaseRepository<T> {
                 });
     }
 
-    public void checkUserInfo(String userUID){
-        DocumentReference docRef = db.collection("users").document(userUID);
+    public void checkUserInfo(String userUid, Class<T> cls){
+        DocumentReference docRef = db.collection("users").document(userUid);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -105,7 +107,8 @@ public class FirebaseRepository<T> {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        userInfo.setValue(document.toObject(UserInfo.class));
+                        T obj = document.toObject(cls);
+                        data.setValue(obj);
 
                       } else {
                         Log.d(TAG, "No such document");
@@ -115,5 +118,23 @@ public class FirebaseRepository<T> {
                 }
             }
         });
+    }
+
+    public void activateUser(String userUid, String role, boolean active) {
+        Map<String, Object> data = new HashMap<String, Object>(){{put("role", role); put("active", active);}};
+        DocumentReference docRef = db.collection("users").document(userUid);
+        docRef.update(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
     }
 }

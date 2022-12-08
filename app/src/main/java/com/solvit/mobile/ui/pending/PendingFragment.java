@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.solvit.mobile.adminit.NotificationAdapter;
 import com.solvit.mobile.adminit.NotificationDetailsAdminIT;
 import com.solvit.mobile.databinding.FragmentPendingBinding;
-import com.solvit.mobile.model.NotificationModelIT;
+import com.solvit.mobile.model.NotificationModel;
 
 import java.util.List;
 
@@ -42,11 +42,11 @@ public class PendingFragment extends Fragment {
         // grab de RecycleView
         rvPendingNotifications = binding.rvPendingNotifications;
 
-        pendingViewModel.getNotificationsLiveData().observe(getViewLifecycleOwner(), new Observer<List<NotificationModelIT>>() {
+        pendingViewModel.getNotificationsLiveData().observe(getViewLifecycleOwner(), new Observer<List<NotificationModel>>() {
             @Override
-            public void onChanged(List<NotificationModelIT> notificationModelITList) {
-                Log.d(TAG, "onChanged: inside" + notificationModelITList);
-                updateRecyclerView(notificationModelITList);
+            public void onChanged(List<NotificationModel> NotificationModelList) {
+                Log.d(TAG, "onChanged: inside" + NotificationModelList);
+                updateRecyclerView(NotificationModelList);
             }
         });
 
@@ -59,10 +59,10 @@ public class PendingFragment extends Fragment {
         binding = null;
     }
 
-    private void updateRecyclerView(List<NotificationModelIT> notificationModelITList){
-        adapter = new NotificationAdapter(getActivity().getApplicationContext(), notificationModelITList, new NotificationAdapter.OnItemClickListener() {
+    private void updateRecyclerView(List<NotificationModel> NotificationModelList){
+        adapter = new NotificationAdapter(getActivity().getApplicationContext(), NotificationModelList, new NotificationAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(NotificationModelIT notification) {
+            public void onItemClick(NotificationModel notification) {
                 // get to notifications activity
                 Intent intent = new Intent(getActivity(), NotificationDetailsAdminIT.class);
                 Log.d(ContentValues.TAG, String.valueOf(notification));

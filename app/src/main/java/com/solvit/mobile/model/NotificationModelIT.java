@@ -14,13 +14,14 @@ public class NotificationModelIT extends NotificationModel implements Serializab
 
     public NotificationModelIT() {}
 
-    public NotificationModelIT(String id, Completed completed, Role role, String room, String building, String description, String user, List<String> fowardTo, long pcNumber) {
-        super(id, completed, role, room, building, description, user, fowardTo);
+
+    public NotificationModelIT(String id, Completed completed, boolean pending, Role role, String title, String room, String building, String description, String user, List<String> fowardTo, long pcNumber) {
+        super(id, completed, pending, role, title, room, building, description, user, fowardTo);
         this.pcNumber = pcNumber;
     }
 
-    public NotificationModelIT(Completed completed, Role role, String room, String building, String description, String user, List<String> fowardTo, long pcNumber) {
-        super(completed, role, room, building, description, user, fowardTo);
+    public NotificationModelIT(Completed completed, boolean pending, Role role, String title, String room, String building, String description, String user, List<String> fowardTo, long pcNumber) {
+        super(completed, pending, role, title, room, building, description, user, fowardTo);
         this.pcNumber = pcNumber;
     }
 

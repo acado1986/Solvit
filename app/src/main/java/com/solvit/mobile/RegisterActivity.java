@@ -76,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     // Register success
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                                    UserInfo userInfo = new UserInfo(firebaseUser.getEmail(), Role.valueOf(spRegister.getSelectedItem().toString()), false);
+                                    UserInfo userInfo = new UserInfo(firebaseUser, Role.valueOf(spRegister.getSelectedItem().toString()), false);
                                     mRepo.createUserInfo(firebaseUser.getUid(), userInfo);
 
                                     // inform the user about the administrator checks
