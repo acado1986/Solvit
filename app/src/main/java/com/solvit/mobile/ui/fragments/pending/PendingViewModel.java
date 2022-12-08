@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.solvit.mobile.model.RevisedBy;
 import com.solvit.mobile.model.NotificationModel;
+import com.solvit.mobile.model.Status;
 import com.solvit.mobile.repositories.FirebaseRepository;
 
 import java.util.HashMap;
@@ -30,7 +31,7 @@ public class PendingViewModel extends ViewModel {
         notificationsLiveData = mRepo.getDataSet();
         mRepo.startChangeListener(
                 "events/it/it_events",
-                new HashMap<String, String>(){{put("completed", RevisedBy.WORKER.toString());}},
+                new HashMap<String, String>(){{put("status", Status.PENDING.toString());}},
                 NotificationModel.class);
        Log.d(TAG, "PendingViewModel: new model");
     }

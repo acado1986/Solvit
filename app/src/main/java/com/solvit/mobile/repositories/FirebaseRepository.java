@@ -30,9 +30,8 @@ import java.util.Map;
 
 public class FirebaseRepository<T> {
 
-    private static FirebaseRepository instance;
     // Firebase connection
-    FirebaseFirestore db;
+    private FirebaseFirestore db;
     private MutableLiveData<List<T>> dataSet;
     private MutableLiveData<T> data;
     private Query query;
@@ -85,17 +84,21 @@ public class FirebaseRepository<T> {
         }
     }
 
-    public void createUserInfo(String userUID, UserInfo userInfo){
-        db.collection("users")
-                .document(userUID)
-                .set(userInfo)
+    public void writeData(String refId, String collectionPath, T data){
+        DocumentReference docRef;
+        if(refId != null){
+           docRef = db.collection(collectionPath).document(refId);
+        } else {
+            docRef = db.collection(collectionPath).document();
+        }
+       docRef.set(data)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "UserInfo created with ID: " + userUID);
+                            Log.d(TAG, "Document created with ID: " + refId);
                         } else {
-                            Log.e(TAG, "Error adding user");
+                            Log.e(TAG, "Error adding document");
                         }
                     }
                 });

@@ -7,7 +7,7 @@ public class NotificationModel implements Serializable {
 
     private String id;
     private RevisedBy revisedBy;
-    private boolean finished;
+    private String status;
     private String title;
     private String room;
     private String building;
@@ -20,10 +20,10 @@ public class NotificationModel implements Serializable {
     public NotificationModel() {
     }
 
-    public NotificationModel(String id, RevisedBy revisedBy, boolean finished, String title, String room, String building, String description, String user, long pcNumber, List<String> fowardTo) {
+    public NotificationModel(String id, RevisedBy revisedBy, String status, String title, String room, String building, String description, String user, long pcNumber, List<String> fowardTo) {
         this.id = id;
         this.revisedBy = revisedBy;
-        this.finished = finished;
+        this.status = status;
         this.title = title;
         this.room = room;
         this.building = building;
@@ -33,9 +33,9 @@ public class NotificationModel implements Serializable {
         this.fowardTo = fowardTo;
     }
 
-    public NotificationModel(RevisedBy revisedBy, boolean finished, String title, String room, String building, String description, String user, long pcNumber, List<String> fowardTo) {
+    public NotificationModel(RevisedBy revisedBy, String status, String title, String room, String building, String description, String user, long pcNumber, List<String> fowardTo) {
         this.revisedBy = revisedBy;
-        this.finished = finished;
+        this.status = status;
         this.title = title;
         this.room = room;
         this.building = building;
@@ -105,9 +105,9 @@ public class NotificationModel implements Serializable {
 
     public void setTitle(String title) {this.title = title;}
 
-    public boolean isFinished() {return finished;}
+    public String getStatus() {return status;}
 
-    public void setFinished(boolean finished) {this.finished = finished;}
+    public void setStatus(String status) {this.status = status;}
 
     public long getPcNumber() {return pcNumber;}
 

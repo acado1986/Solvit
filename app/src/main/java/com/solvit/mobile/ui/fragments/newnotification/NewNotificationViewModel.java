@@ -2,29 +2,29 @@ package com.solvit.mobile.ui.fragments.newnotification;
 
 import android.text.TextUtils;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.solvit.mobile.model.NotificationModel;
+import com.solvit.mobile.repositories.FirebaseRepository;
 
 public class NewNotificationViewModel extends ViewModel {
 
     //private final MutableLiveData<String> etUserNotification;
     private final FirebaseUser currentUser;
+    private FirebaseRepository<NotificationModel> mRepo;
 
     public NewNotificationViewModel() {
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        this.mRepo = new FirebaseRepository<>();
     }
 
-//    public LiveData<String> getEtUserNotifiaction() {
-//        return etUserNotification;
-//    }
     public String getUserName(){
-        if(TextUtils.isEmpty(currentUser.getDisplayName()))
-            return currentUser.getEmail();
-        else
-            return currentUser.getDisplayName();
+        return currentUser.getEmail();
+    }
+
+    public void writeNotification(NotificationModel notification, String collectionPath){
+        mRepo.writeData(null, collectionPath, notification);
     }
 }

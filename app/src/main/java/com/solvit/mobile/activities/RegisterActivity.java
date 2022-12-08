@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etRegPassword;
     private EditText etRegPasswordConfirm;
     private Spinner spRegister;
-    private FirebaseRepository mRepo;
+    private FirebaseRepository<UserInfo> mRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                                     UserInfo userInfo = new UserInfo(firebaseUser, Role.valueOf(spRegister.getSelectedItem().toString()), false);
-                                    mRepo.createUserInfo(firebaseUser.getUid(), userInfo);
+                                    mRepo.writeData(firebaseUser.getUid(), "users", userInfo);
 
                                     // inform the user about the administrator checks
                                     new AlertDialog.Builder(RegisterActivity.this)

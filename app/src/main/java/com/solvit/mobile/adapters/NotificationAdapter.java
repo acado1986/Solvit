@@ -54,7 +54,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.tvTitle.setText(notifications.get(position).getTitle());
         holder.tvRoom.setText(notifications.get(position).getRoom());
         holder.bind(notifications.get(position), listener);
-        holder.imgNotification.setImageResource(notifications.get(position).isFinished() ? R.drawable.ic_baseline_pending_actions_24 :  R.drawable.ic_baseline_done_outline_24);
+        holder.imgNotification.setImageResource(notifications.get(position).getStatus().equals("PENDING") ? R.drawable.ic_baseline_pending_actions_24 :  R.drawable.ic_baseline_done_outline_24);
     }
 
     // the number of items you want to display

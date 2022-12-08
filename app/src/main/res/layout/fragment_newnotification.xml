@@ -49,16 +49,16 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:text="Tipo notification : "
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tvUserName"
-        app:layout_constraintStart_toEndOf="@+id/tvUserName"
-        app:layout_constraintTop_toTopOf="@+id/tvUserName" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <Spinner
         android:id="@+id/spNotificationType"
-        android:layout_width="48dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView12"
@@ -76,12 +76,12 @@
         android:text="Edificio : "
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <EditText
         android:id="@+id/etBuildingNotification"
         android:layout_width="100dp"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:textSize="14sp"
@@ -97,13 +97,14 @@
         android:layout_marginStart="8dp"
         android:text="Sala : "
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/etBuildingNotification"
         app:layout_constraintStart_toEndOf="@+id/etBuildingNotification"
         app:layout_constraintTop_toTopOf="@+id/etBuildingNotification" />
 
     <EditText
         android:id="@+id/etNotificationRoom"
         android:layout_width="100dp"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -127,7 +128,7 @@
     <EditText
         android:id="@+id/etNotificationTitle"
         android:layout_width="0dp"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
@@ -179,9 +180,9 @@
         app:layout_constraintTop_toBottomOf="@+id/etNotificationDescription" />
 
     <Spinner
-        android:id="@+id/spCompletedNotification"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/spPcNumber"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="32dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView15"
         app:layout_constraintStart_toEndOf="@+id/textView15"
@@ -189,12 +190,12 @@
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <Button
-        android:id="@+id/btnCancelNotification"
+        android:id="@+id/btnResetNotification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="@drawable/custombutton"
-        android:text="Cancelar"
+        android:text="Limpiar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnSendNotification"
         app:layout_constraintHorizontal_bias="0.5"
@@ -207,10 +208,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/custombutton"
         android:text="Enviar"
-        app:layout_constraintBottom_toBottomOf="@+id/btnCancelNotification"
+        app:layout_constraintBottom_toBottomOf="@+id/btnResetNotification"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnCancelNotification"
-        app:layout_constraintTop_toTopOf="@+id/btnCancelNotification" />
+        app:layout_constraintStart_toEndOf="@+id/btnResetNotification"
+        app:layout_constraintTop_toTopOf="@+id/btnResetNotification" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
