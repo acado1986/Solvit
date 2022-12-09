@@ -126,7 +126,11 @@ public class NavigationDrawerActivity extends AppCompatActivity {
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .setPositiveButton("Ok", (dialogInterface, i) -> {
                                 FirebaseAuth.getInstance().signOut();
-                                navController.navigate(R.id.nav_signout);
+                                //navController.navigate(R.id.nav_signout);
+                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                finish();
                             })
                             .setNegativeButton("Cancel", (dialogInterface, i) -> {
                                 drawer.closeDrawers();
@@ -154,7 +158,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
                 Uri uri = Uri.fromParts("package", getPackageName(), null);
                 intent.setData(uri);
                 // opens in a new stack avoids reapearing when the backbutton is pressed
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
             default:
@@ -188,6 +192,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         if(currentUser == null ){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 
