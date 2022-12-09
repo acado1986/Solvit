@@ -79,7 +79,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         // check the user role access hide list of users if is not admin
         SharedPreferences sharedPref = this.getSharedPreferences("loginPref", Context.MODE_PRIVATE);
         String role = sharedPref.getString("role", "TIC");
-        int collectionPath = sharedPref.getInt("collectionPath", 0);
+        int collectionPath = sharedPref.getInt("collectionPath", R.string.collectionIt);
         setCollection_path(getResources().getString(collectionPath));
         Log.d(TAG, "collectionspath: " + getCollection_path());
         Log.d(TAG, "role: " + sharedPref.getAll());

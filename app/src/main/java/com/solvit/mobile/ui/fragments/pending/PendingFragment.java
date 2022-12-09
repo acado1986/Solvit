@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.solvit.mobile.R;
 import com.solvit.mobile.adapters.NotificationAdapter;
 import com.solvit.mobile.activities.NotificationDetailsActivity;
 import com.solvit.mobile.databinding.FragmentPendingBinding;
@@ -64,7 +65,7 @@ public class PendingFragment extends Fragment {
 
     private String getCollectionPath() {
         SharedPreferences sharedPref = getContext().getSharedPreferences("loginPref", Context.MODE_PRIVATE);
-        int collectionPath = sharedPref.getInt("collectionPath", 0);;
+        int collectionPath = sharedPref.getInt("collectionPath", R.string.collectionIt);
         return getResources().getString(collectionPath);
     }
 

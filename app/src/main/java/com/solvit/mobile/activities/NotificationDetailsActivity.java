@@ -134,7 +134,7 @@ public class NotificationDetailsActivity extends AppCompatActivity {
 
     private String getCollectionPath() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("loginPref", Context.MODE_PRIVATE);
-        int collectionPath = sharedPref.getInt("collectionPath", 0);;
+        int collectionPath = sharedPref.getInt("collectionPath", R.string.collectionIt);;
         return getResources().getString(collectionPath);
     }
 }
