@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 mRepo.checkUserInfo(mAuth.getCurrentUser().getUid(), UserInfo.class);
                                 userInfo = mRepo.getData();
-                                Log.d(TAG, "signInWithEmail:success " + userInfo);
+                                Log.d(TAG, "signInWithEmail:success  " + userInfo);
                                 updateUI();
                             } else {
                                 // If sign in fails, display a message to the user.
