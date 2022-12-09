@@ -17,7 +17,7 @@ public class SplashActivity extends AppCompatActivity {
                 // This method will be executed once the timer is over
                 Intent intent = new Intent(SplashActivity.this, NavigationDrawerActivity.class);
                 startActivity(intent);
-                finishAffinity();
+                finish();
             }
         }, 1000);
     }
