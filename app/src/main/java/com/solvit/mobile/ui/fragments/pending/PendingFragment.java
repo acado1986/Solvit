@@ -3,7 +3,9 @@ package com.solvit.mobile.ui.fragments.pending;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +38,8 @@ public class PendingFragment extends Fragment {
 
         PendingViewModel pendingViewModel = new ViewModelProvider(this).get(PendingViewModel.class);
 
+        pendingViewModel.startListener(getCollectionPath());
+
         binding = FragmentPendingBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         // grab de RecycleView
@@ -56,6 +60,12 @@ public class PendingFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private String getCollectionPath() {
+        SharedPreferences sharedPref = getContext().getSharedPreferences("loginPref", Context.MODE_PRIVATE);
+        int collectionPath = sharedPref.getInt("collectionPath", 0);;
+        return getResources().getString(collectionPath);
     }
 
     private void updateRecyclerView(List<NotificationModel> NotificationModelList){

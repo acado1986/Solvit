@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -74,7 +76,6 @@ public class NotificationDetailsActivity extends AppCompatActivity {
             public void onChanged(List<UserInfo> userInfos) {
                 HashMap<String, String> nombres = new HashMap<>();
                 userInfos.stream().forEach(e->nombres.put(e.getUid(), e.getDisplayName() == null? e.getEmail() : e.getDisplayName()));
-                Log.d(TAG, "onChangedactivity: " + nombres);
                 ArrayAdapter<String> adapter=new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, new ArrayList(nombres.values()));
                 spDetailsFowardTo.setAdapter(adapter);
             }
@@ -92,14 +93,21 @@ public class NotificationDetailsActivity extends AppCompatActivity {
 
         btnSend.setOnClickListener(view -> {
             resetNotificationDetails(notification);
-            mRepoNotifications.writeData(notification.getUid(), "events/it/it_events", notification);
+            mRepoNotifications.writeData(notification.getUid(), getCollectionPath(), notification);
             Toast.makeText(this, "Se ha modificado los detalles de la notification", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, NavigationDrawerActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         });
 
         btnDelete.setOnClickListener(view1 -> {
-            mRepoNotifications.deleteData(notification.getUid(), "events/it/it_events");
+            mRepoNotifications.deleteData(notification.getUid(), getCollectionPath());
             Toast.makeText(this, "Notifiacion borrada", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, NavigationDrawerActivity.class));
+            Intent intent = new Intent(this, NavigationDrawerActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         });
 
     }
@@ -122,5 +130,11 @@ public class NotificationDetailsActivity extends AppCompatActivity {
         etDetailsPcNumber.setText(String.valueOf(notification.getPcNumber()));
         spDetailsStatus.setSelection(Status.valueOf(notification.getStatus()).ordinal());
         spDetailsRevisedBy.setSelection(RevisedBy.valueOf(notification.getRevisedBy()).ordinal());
+    }
+
+    private String getCollectionPath() {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("loginPref", Context.MODE_PRIVATE);
+        int collectionPath = sharedPref.getInt("collectionPath", 0);;
+        return getResources().getString(collectionPath);
     }
 }

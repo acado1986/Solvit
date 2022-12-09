@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.solvit.mobile.activities.NavigationDrawerActivity;
 import com.solvit.mobile.model.RevisedBy;
 import com.solvit.mobile.model.NotificationModel;
 import com.solvit.mobile.model.Status;
@@ -29,11 +30,6 @@ public class PendingViewModel extends ViewModel {
 
         mRepo = new FirebaseRepository<NotificationModel>();
         notificationsLiveData = mRepo.getDataSet();
-        mRepo.startChangeListener(
-                "events/it/it_events",
-                new HashMap<String, String>(){{put("status", Status.PENDING.toString());}},
-                NotificationModel.class);
-       Log.d(TAG, "PendingViewModel: new model");
     }
 
     public LiveData<String> getText() {
@@ -43,5 +39,12 @@ public class PendingViewModel extends ViewModel {
     public LiveData<List<NotificationModel>> getNotificationsLiveData() {
 
         return notificationsLiveData;
+    }
+
+    public void startListener(String collectionPath){
+        mRepo.startChangeListener(
+                collectionPath,
+                new HashMap<String, String>(){{put("status", Status.PENDING.toString());}},
+                NotificationModel.class);
     }
 }

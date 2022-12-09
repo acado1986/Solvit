@@ -1,6 +1,8 @@
 package com.solvit.mobile.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -28,7 +31,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.solvit.mobile.R;
 
 import com.solvit.mobile.databinding.ActivityNavigationDrawerBinding;
-import com.solvit.mobile.repositories.FirebaseRepository;
 import com.solvit.mobile.ui.fragments.completed.CompletedFragment;
 import com.solvit.mobile.ui.fragments.newnotification.NewNotificationFragment;
 import com.solvit.mobile.ui.fragments.pending.PendingFragment;
@@ -36,11 +38,14 @@ import com.solvit.mobile.ui.fragments.pending.PendingFragment;
 
 public class NavigationDrawerActivity extends AppCompatActivity {
 
+    // variable for role access
+    private  static String collection_path;
+
     private static final String TAG = "Navigation Drawer";
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavigationDrawerBinding binding;
     private FirebaseAuth mAuth;
-    private FirebaseRepository mRepo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +53,9 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
         // check if the user is logged in
         mAuth = FirebaseAuth.getInstance();
-        mRepo = new FirebaseRepository();
         binding = ActivityNavigationDrawerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
@@ -65,6 +70,22 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        // set navigation header details
+        ((TextView)binding.navView.getHeaderView(0).findViewById(R.id.tvHeaderDisplayName)).setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        ((TextView)binding.navView.getHeaderView(0).findViewById(R.id.tvHeaderEmail)).setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
+        // check the user role access hide list of users if is not admin
+        SharedPreferences sharedPref = this.getSharedPreferences("loginPref", Context.MODE_PRIVATE);
+        String role = sharedPref.getString("role", "TIC");
+        int collectionPath = sharedPref.getInt("collectionPath", 0);
+        setCollection_path(getResources().getString(collectionPath));
+        Log.d(TAG, "collectionspath: " + getCollection_path());
+        Log.d(TAG, "role: " + sharedPref.getAll());
+        if(!role.equals("ADMIN")){
+            navigationView.getMenu().findItem(R.id.nav_users).setVisible(false);
+        }
+
+        // bind de fab button
         binding.appBarNavigationDrawer.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,5 +185,13 @@ public class NavigationDrawerActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
+    }
+
+    public static String getCollection_path() {
+        return collection_path;
+    }
+
+    public void setCollection_path(String collection_path) {
+        this.collection_path = collection_path;
     }
 }

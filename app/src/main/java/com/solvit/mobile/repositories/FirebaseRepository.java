@@ -27,6 +27,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.core.OrderBy;
+import com.google.firebase.firestore.core.OrderBy.Direction;
 import com.solvit.mobile.model.Uid;
 import com.solvit.mobile.model.UserInfo;
 
@@ -82,6 +84,7 @@ public class FirebaseRepository<T extends Uid> {
                             dataList.add(aData);
                         }
                         dataSet.postValue(dataList);
+                        Log.d(TAG, "on listener: " +dataList);
                     }
                 });
     }

@@ -3,30 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_pending"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_pending" />
-        <item
-            android:id="@+id/nav_completed"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_completed" />
-        <item
-            android:id="@+id/nav_users"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_users" />
-        <item
-            android:id="@+id/nav_newnotification"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_newnotification" />
-        <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_profile" />
-        <item
-            android:id="@+id/nav_signout"
-            android:icon="@drawable/ic_menu_signout"
-            android:title="@string/sign_out" />
-    </group>
+    <item android:title="General">
+        <menu>
+            <item
+                android:id="@+id/nav_pending"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="@string/menu_pending" />
+            <item
+                android:id="@+id/nav_completed"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu_completed" />
+            <item
+                android:id="@+id/nav_users"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu_users" />
+        </menu>
+    </item>
+
+    <item android:title="Crear">
+        <menu>
+            <item
+                android:id="@+id/nav_newnotification"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="@string/menu_newnotification" />
+        </menu>
+    </item>
+
+    <item android:title="Personal">
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="@string/menu_profile" />
+            <item
+                android:id="@+id/nav_signout"
+                android:icon="@drawable/ic_menu_signout"
+                android:title="@string/sign_out" />
+        </menu>
+    </item>
 </menu>

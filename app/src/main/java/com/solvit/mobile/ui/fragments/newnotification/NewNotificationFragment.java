@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.type.DateTime;
 import com.solvit.mobile.R;
 import com.solvit.mobile.databinding.FragmentNewnotificationBinding;
 import com.solvit.mobile.model.NotificationModel;
@@ -86,17 +87,17 @@ public class NewNotificationFragment extends Fragment {
                     new ArrayList<String>()
             );
 
-            String collectioPath = "events";
+            String collectioPath = "";
             NotificationType notificationType = NotificationType.values()[spNotificationType.getSelectedItemPosition()];
             switch (notificationType){
                 case TIC:
-                    collectioPath += "/it/it_events";
+                    collectioPath = getResources().getString(R.string.collectionIt);
                     break;
                 case MAINTENANCE:
-                    collectioPath += "/maintenance/maintenance_events";
+                    collectioPath = getResources().getString(R.string.collectionMaintenance);
                     break;
                 case RECEPTION:
-                    collectioPath += "/reception/reception_events";
+                    collectioPath = getResources().getString(R.string.collectionReception);
                     break;
             }
 

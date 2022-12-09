@@ -1,14 +1,9 @@
 package com.solvit.mobile.ui.fragments.completed;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.solvit.mobile.model.RevisedBy;
 import com.solvit.mobile.model.NotificationModel;
 import com.solvit.mobile.model.Status;
 import com.solvit.mobile.repositories.FirebaseRepository;
@@ -24,15 +19,21 @@ public class CompletedViewModel extends ViewModel {
     public CompletedViewModel() {
         mRepo = new FirebaseRepository<NotificationModel>();
         notificationsLiveData = mRepo.getDataSet();
-        mRepo.startChangeListener(
-                "events/it/it_events",
-                new HashMap<String, String>(){{put("status", Status.DONE.toString());}},
-                NotificationModel.class);
-        Log.d(TAG, "CompletedViewModel: new model");
     }
 
     public LiveData<List<NotificationModel>> getNotificationsLiveData() {
 
         return notificationsLiveData;
     }
+
+    public void startListener(String collectionPath){
+        mRepo.startChangeListener(
+                collectionPath,
+                new HashMap<String, String>(){{put("status", Status.DONE.toString());}},
+                NotificationModel.class);
+    }
+
+
+
+
 }

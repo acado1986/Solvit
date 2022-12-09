@@ -1,9 +1,12 @@
 package com.solvit.mobile.model;
 
+import com.google.firebase.firestore.ServerTimestamp;
+
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
-public class NotificationModel implements Uid, Serializable {
+public class NotificationModel implements Uid, Serializable, Comparable<NotificationModel> {
 
     private String id;
     private String revisedBy;
@@ -15,6 +18,9 @@ public class NotificationModel implements Uid, Serializable {
     private String user;
     private long pcNumber;
     private List<String> fowardTo;
+
+    @ServerTimestamp
+    private Date updatedAt;
 
 
     public NotificationModel() {
@@ -31,6 +37,7 @@ public class NotificationModel implements Uid, Serializable {
         this.user = user;
         this.pcNumber = pcNumber;
         this.fowardTo = fowardTo;
+
     }
 
     public NotificationModel(String revisedBy, String status, String title, String room, String building, String description, String user, long pcNumber, List<String> fowardTo) {
@@ -112,4 +119,17 @@ public class NotificationModel implements Uid, Serializable {
     public long getPcNumber() {return pcNumber;}
 
     public void setPcNumber(long pcNumber) {this.pcNumber = pcNumber;}
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public int compareTo(NotificationModel notificationModel) {
+        return getUpdatedAt().compareTo(notificationModel.getUpdatedAt());
+    }
 }

@@ -1,9 +1,9 @@
 package com.solvit.mobile.ui.fragments.completed;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +36,10 @@ public class CompletedFragment extends Fragment {
         CompletedViewModel completedViewModel =
                 new ViewModelProvider(this).get(CompletedViewModel.class);
 
+        //start listener
+
+        completedViewModel.startListener(getCollectionPath());
+
         binding = FragmentCompletedBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         rvCompletedNotifications = binding.rvCompletedNotifications;
@@ -43,11 +47,16 @@ public class CompletedFragment extends Fragment {
         completedViewModel.getNotificationsLiveData().observe(getViewLifecycleOwner(), new Observer<List<NotificationModel>>() {
             @Override
             public void onChanged(List<NotificationModel> notificationModelList) {
-                Log.d(TAG, "onChanged: inside" + notificationModelList);
                 updateRecyclerView(notificationModelList);
             }
         });
         return root;
+    }
+
+    private String getCollectionPath() {
+        SharedPreferences sharedPref = getContext().getSharedPreferences("loginPref", Context.MODE_PRIVATE);
+        int collectionPath = sharedPref.getInt("collectionPath", 0);;
+        return getResources().getString(collectionPath);
     }
 
     @Override

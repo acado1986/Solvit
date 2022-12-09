@@ -87,6 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             .setIcon(android.R.drawable.ic_dialog_info)
                                             .setPositiveButton("Ok", (dialogInterface, i) -> {
                                                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                 startActivity(intent);
                                                 finishAffinity();
                                             })

@@ -6,13 +6,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.ServerTimestamp;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Aditional user information
  */
-public class UserInfo implements com.google.firebase.auth.UserInfo, Serializable, Uid {
+public class UserInfo implements com.google.firebase.auth.UserInfo, Serializable, Uid, Comparable<UserInfo> {
 
     private Role role;
     private boolean active;
@@ -23,6 +25,8 @@ public class UserInfo implements com.google.firebase.auth.UserInfo, Serializable
     private String providerId;
     private String uid;
     private boolean emailVerified;
+    @ServerTimestamp
+    private Date updatedAt;
 
     public UserInfo() {
     }
@@ -133,5 +137,18 @@ public class UserInfo implements com.google.firebase.auth.UserInfo, Serializable
 
     public void setEmailVerified(Boolean emailVerified) {
         this.emailVerified = emailVerified;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public int compareTo(UserInfo userInfo) {
+        return getUpdatedAt().compareTo(userInfo.getUpdatedAt());
     }
 }

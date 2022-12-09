@@ -2,7 +2,9 @@ package com.solvit.mobile.activities;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -20,6 +22,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.solvit.mobile.R;
+import com.solvit.mobile.model.NotificationType;
+import com.solvit.mobile.model.Role;
 import com.solvit.mobile.model.UserInfo;
 import com.solvit.mobile.repositories.FirebaseRepository;
 
@@ -90,8 +94,11 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d(TAG, userInfo.getEmail());
                     // the user is active
                     if (userInfo.getActive()) {
+                        Log.d(TAG, "onChanged: "+ userInfo.getRole());
+                        savePrefs(userInfo);
                         Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
                         intent.putExtra("userInfo", userInfo);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finishAffinity();
                     } else {
@@ -103,5 +110,35 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void savePrefs(UserInfo userInfo){
+        SharedPreferences sharedPref = this.getSharedPreferences("loginPref",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        // save the access database routes based or roles
+
+        Role role = Role.values()[Role.valueOf(userInfo.getRole().toString()).ordinal()];
+        int collectioPath = 0;
+        switch (role){
+            case ADMIN_TIC:
+            case TIC:
+                collectioPath = R.string.collectionIt;
+                break;
+            case MAINTENANCE:
+            case ADMIN_MAINTENANCE:
+                collectioPath = R.string.collectionMaintenance;
+                break;
+            case RECEPTION:
+            case ADMIN_RECEPTION:
+                collectioPath = R.string.collectionReception;
+                break;
+            default:
+                collectioPath = R.string.collectionIt;
+
+        }
+        editor.putInt("collectionPath", collectioPath);
+        editor.putString("role", userInfo.getRole().toString());
+        editor.commit();
+
     }
 }

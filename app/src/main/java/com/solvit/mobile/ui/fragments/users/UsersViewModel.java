@@ -27,7 +27,6 @@ public class UsersViewModel extends ViewModel {
                 "users",
                 new HashMap<String, String>(),
                 UserInfo.class);
-        Log.d(TAG, "UsersViewMOdel: new model");
     }
 
 
