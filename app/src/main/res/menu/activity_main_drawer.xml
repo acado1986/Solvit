@@ -7,15 +7,15 @@
         <menu>
             <item
                 android:id="@+id/nav_pending"
-                android:icon="@drawable/ic_menu_camera"
+                android:icon="@drawable/ic_baseline_pending_actions_24"
                 android:title="@string/menu_pending" />
             <item
                 android:id="@+id/nav_completed"
-                android:icon="@drawable/ic_menu_gallery"
+                android:icon="@drawable/ic_outline_done_all_24"
                 android:title="@string/menu_completed" />
             <item
                 android:id="@+id/nav_users"
-                android:icon="@drawable/ic_menu_gallery"
+                android:icon="@drawable/ic_baseline_supervised_user_circle_24"
                 android:title="@string/menu_users" />
         </menu>
     </item>
@@ -24,7 +24,7 @@
         <menu>
             <item
                 android:id="@+id/nav_newnotification"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@drawable/ic_baseline_create_new_folder_24"
                 android:title="@string/menu_newnotification" />
         </menu>
     </item>
@@ -33,7 +33,7 @@
         <menu>
             <item
                 android:id="@+id/nav_profile"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@drawable/ic_baseline_manage_accounts_24"
                 android:title="@string/menu_profile" />
             <item
                 android:id="@+id/nav_signout"
