@@ -71,8 +71,10 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         // set navigation header details
-        ((TextView)binding.navView.getHeaderView(0).findViewById(R.id.tvHeaderDisplayName)).setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-        ((TextView)binding.navView.getHeaderView(0).findViewById(R.id.tvHeaderEmail)).setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        if(mAuth.getCurrentUser() != null) {
+            ((TextView) binding.navView.getHeaderView(0).findViewById(R.id.tvHeaderDisplayName)).setText(mAuth.getCurrentUser().getDisplayName());
+            ((TextView) binding.navView.getHeaderView(0).findViewById(R.id.tvHeaderEmail)).setText(mAuth.getCurrentUser().getEmail());
+        }
 
         // check the user role access hide list of users if is not admin
         SharedPreferences sharedPref = this.getSharedPreferences("loginPref", Context.MODE_PRIVATE);
@@ -134,6 +136,8 @@ public class NavigationDrawerActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
