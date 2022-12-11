@@ -103,7 +103,6 @@ public class NotificationDetailsActivity extends AppCompatActivity {
             mRepoNotifications.writeData(notification.getUid(), getCollectionPath(), notification);
             Toast.makeText(this, "Se ha modificado los detalles de la notification", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, NavigationDrawerActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         });
@@ -112,7 +111,6 @@ public class NotificationDetailsActivity extends AppCompatActivity {
             mRepoNotifications.deleteData(notification.getUid(), getCollectionPath());
             Toast.makeText(this, "Notifiacion borrada", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, NavigationDrawerActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         });
