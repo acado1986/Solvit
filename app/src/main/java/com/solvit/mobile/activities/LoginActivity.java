@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.solvit.mobile.R;
 import com.solvit.mobile.model.NotificationType;
 import com.solvit.mobile.model.Role;
@@ -47,6 +48,14 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mRepo = new FirebaseRepository<>();
         userInfo = new MutableLiveData<>();
+
+        // check if the user is logged in
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null ){
+            mRepo.checkUserInfo(mAuth.getCurrentUser().getUid(), UserInfo.class);
+            userInfo = mRepo.getData();
+            updateUI();
+        }
 
         btnSignIn = findViewById(R.id.btnSignIn);
         etEmail = findViewById(R.id.etEmail);

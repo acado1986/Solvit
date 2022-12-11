@@ -64,6 +64,13 @@ public class NotificationDetailsActivity extends AppCompatActivity {
         btnSend = findViewById(R.id.btnSend);
         btnDelete = findViewById(R.id.btnDeleteNotification);
 
+        // deactivate feature if not admin
+        if(getRole() != null){
+            if(!getRole().contains("ADMIN")){
+                spDetailsRevisedBy.setEnabled(false);
+                spDetailsFowardTo.setEnabled(false);
+            }
+        }
         // get user list
         mRepoUsers = new FirebaseRepository<>();
         mRepoNotifications = new FirebaseRepository<>();
@@ -112,6 +119,7 @@ public class NotificationDetailsActivity extends AppCompatActivity {
 
     }
 
+
     private void resetNotificationDetails(NotificationModel notification) {
         notification.setBuilding(etDetailsBuilding.getText().toString());
         notification.setRoom(etDetailsRoom.getText().toString());
@@ -136,5 +144,11 @@ public class NotificationDetailsActivity extends AppCompatActivity {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("loginPref", Context.MODE_PRIVATE);
         int collectionPath = sharedPref.getInt("collectionPath", R.string.collectionIt);;
         return getResources().getString(collectionPath);
+    }
+
+    private String getRole(){
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("loginPref", Context.MODE_PRIVATE);
+        String role = sharedPref.getString("role", "TIC");;
+        return role;
     }
 }

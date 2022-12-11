@@ -57,7 +57,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="35dp"
             android:background="@drawable/custombutton2"
-            android:text="Log in"
+            android:text="Entrar"
             android:textAllCaps="false"
             android:textColor="#FFFBF6" />
 
@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Forget Password"
+                android:text="Contraseña olvidada"
                 android:textColor="#E8EAF6"
                 android:textSize="18dp" />
 
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Sign up"
+                android:text="Registrar"
                 android:textColor="#FFFBF6"
                 android:textSize="18dp" />
 
