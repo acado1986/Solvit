@@ -2,8 +2,6 @@ package com.solvit.mobile.activities;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,10 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.solvit.mobile.R;
-import com.solvit.mobile.activities.LoginActivity;
 
+/**
+ * Activiy to reset the password
+ */
 public class ResetPasswordActivity extends AppCompatActivity {
 
     private EditText etResetEmail;
@@ -28,18 +30,17 @@ public class ResetPasswordActivity extends AppCompatActivity {
         etResetEmail = findViewById(R.id.etResetEmail);
         btnSendReset = findViewById(R.id.btnSendReset);
 
-        btnSendReset.setOnClickListener((view)->{
+        btnSendReset.setOnClickListener((view) -> {
             FirebaseAuth auth = FirebaseAuth.getInstance();
-            auth.sendPasswordResetEmail(etResetEmail.getText().toString())
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(this, "Se ha mandado un correo para restablecer su contraseña", Toast.LENGTH_LONG).show();
-                            Log.d(TAG, "Email sent.");
-                            Intent intent = new Intent(this, LoginActivity.class);
-                            startActivity(intent);
-                            finishAffinity();
-                        }
-                    });
+            auth.sendPasswordResetEmail(etResetEmail.getText().toString()).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Toast.makeText(this, "Se ha mandado un correo para restablecer su contraseña", Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "Email sent.");
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                    finishAffinity();
+                }
+            });
         });
 
     }

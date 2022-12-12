@@ -1,9 +1,5 @@
 package com.solvit.mobile.ui.fragments.users;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -16,8 +12,8 @@ import java.util.List;
 
 public class UsersViewModel extends ViewModel {
 
-    private MutableLiveData<List<UserInfo>> usersLiveData;
-    private FirebaseRepository<UserInfo> mRepo;
+    private final MutableLiveData<List<UserInfo>> usersLiveData;
+    private final FirebaseRepository<UserInfo> mRepo;
 
 
     public UsersViewModel() {

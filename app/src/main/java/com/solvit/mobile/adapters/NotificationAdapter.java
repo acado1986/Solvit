@@ -15,16 +15,14 @@ import com.solvit.mobile.model.NotificationModel;
 
 import java.util.List;
 
+/**
+ * A general purpose adapter for notifications
+ */
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
-
-    public interface OnItemClickListener {
-        void onItemClick(NotificationModel notification);
-    }
 
     Context context;
     List<NotificationModel> notifications;
     OnItemClickListener listener;
-
     public NotificationAdapter(Context context, List<NotificationModel> notifications, OnItemClickListener listener) {
         this.context = context;
         this.notifications = notifications;
@@ -54,13 +52,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.tvTitle.setText(notifications.get(position).getTitle());
         holder.tvRoom.setText(notifications.get(position).getRoom());
         holder.bind(notifications.get(position), listener);
-        holder.imgNotification.setImageResource(notifications.get(position).getStatus().equals("PENDING") ? R.drawable.ic_baseline_pending_actions_24 :  R.drawable.ic_baseline_done_outline_24);
+        holder.imgNotification.setImageResource(notifications.get(position).getStatus().equals("PENDING") ? R.drawable.ic_baseline_pending_actions_24 : R.drawable.ic_baseline_done_outline_24);
     }
 
     // the number of items you want to display
     @Override
     public int getItemCount() {
         return notifications.size();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(NotificationModel notification);
     }
 
     // grabbing the views from our layout recycle_view_item.xml, kinda of create method
@@ -78,12 +80,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
 
         public void bind(final NotificationModel notificationModel, final OnItemClickListener listener) {
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onItemClick(notificationModel);
-                }
-            });
+            itemView.setOnClickListener(view -> listener.onItemClick(notificationModel));
         }
     }
 }

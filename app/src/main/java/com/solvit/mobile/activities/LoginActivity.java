@@ -23,11 +23,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.solvit.mobile.R;
-import com.solvit.mobile.model.NotificationType;
 import com.solvit.mobile.model.Role;
 import com.solvit.mobile.model.UserInfo;
 import com.solvit.mobile.repositories.FirebaseRepository;
 
+/**
+ * Login activity that check uses Firebase authentication module for authenticate.
+ * If the users is already sign in then it will redirect to the main activity if not will redirect to the register page.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -51,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // check if the user is logged in
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null ){
+        if (currentUser != null) {
             mRepo.checkUserInfo(mAuth.getCurrentUser().getUid(), UserInfo.class);
             userInfo = mRepo.getData();
             updateUI();
@@ -84,16 +87,22 @@ public class LoginActivity extends AppCompatActivity {
                     });
         });
 
-        tvForgetPassword.setOnClickListener((view)-> {
+        tvForgetPassword.setOnClickListener((view) -> {
             Intent intent = new Intent(this, ResetPasswordActivity.class);
             startActivity(intent);
         });
-        tvSignUp.setOnClickListener((view)-> {
+        tvSignUp.setOnClickListener((view) -> {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
         });
     }
 
+    /**
+     * Method to update the user interface.
+     * It the user is exist in the Firebase Authentification module, it checks if the account is active
+     * from additional data stored in Firebase Firestore and advanced to the main activity.
+     * It the user has the status inactive it informs with a message toast.
+     */
     private void updateUI() {
         Log.d(TAG, "updateUI: " + userInfo);
         userInfo.observe(this, new Observer<UserInfo>() {
@@ -103,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d(TAG, userInfo.getEmail());
                     // the user is active
                     if (userInfo.getActive()) {
-                        Log.d(TAG, "onChanged: "+ userInfo.getRole());
+                        Log.d(TAG, "onChanged: " + userInfo.getRole());
                         savePrefs(userInfo);
                         Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
                         intent.putExtra("userInfo", userInfo);
@@ -121,14 +130,18 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void savePrefs(UserInfo userInfo){
-        SharedPreferences sharedPref = this.getSharedPreferences("loginPref",Context.MODE_PRIVATE);
+    /**
+     * Saves at login time in a Shared Preferences object the role and access to their resources in Firebase Firestore
+     * @param userInfo
+     */
+    private void savePrefs(UserInfo userInfo) {
+        SharedPreferences sharedPref = this.getSharedPreferences("loginPref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        // save the access database routes based or roles
 
+        // save the access database routes based or roles
         Role role = Role.values()[Role.valueOf(userInfo.getRole().toString()).ordinal()];
         int collectioPath = 0;
-        switch (role){
+        switch (role) {
             case ADMIN_TIC:
             case TIC:
                 collectioPath = R.string.collectionIt;

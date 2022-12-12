@@ -38,7 +38,6 @@ public class CompletedFragment extends Fragment {
                 new ViewModelProvider(this).get(CompletedViewModel.class);
 
         //start listener
-
         completedViewModel.startListener(getCollectionPath());
 
         binding = FragmentCompletedBinding.inflate(inflater, container, false);

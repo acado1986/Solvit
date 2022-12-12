@@ -7,51 +7,49 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.material.navigation.NavigationView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.solvit.mobile.R;
-
 import com.solvit.mobile.databinding.ActivityNavigationDrawerBinding;
 import com.solvit.mobile.ui.fragments.completed.CompletedFragment;
 import com.solvit.mobile.ui.fragments.newnotification.NewNotificationFragment;
 import com.solvit.mobile.ui.fragments.pending.PendingFragment;
 
 
+/**
+ * Main activity of the application. It consist of a Drawer Activity that instantiates four fragments
+ * with their respective data model and links them to the menu drawer.
+ */
 public class NavigationDrawerActivity extends AppCompatActivity {
 
-    // variable for role access
-    private  static String collection_path;
-
     private static final String TAG = "Navigation Drawer";
+    // variable for role access
+    private static String collection_path;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavigationDrawerBinding binding;
     private FirebaseAuth mAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // check if the user is logged in
+        // instantite the current user
         mAuth = FirebaseAuth.getInstance();
         binding = ActivityNavigationDrawerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -71,77 +69,64 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         // set navigation header details
-        if(mAuth.getCurrentUser() != null) {
+        if (mAuth.getCurrentUser() != null) {
             ((TextView) binding.navView.getHeaderView(0).findViewById(R.id.tvHeaderDisplayName)).setText(mAuth.getCurrentUser().getDisplayName());
             ((TextView) binding.navView.getHeaderView(0).findViewById(R.id.tvHeaderEmail)).setText(mAuth.getCurrentUser().getEmail());
         }
 
-        // check the user role access hide list of users if is not admin
+        // check the user role access, hide Users fragment if is not admin
         SharedPreferences sharedPref = this.getSharedPreferences("loginPref", Context.MODE_PRIVATE);
         String role = sharedPref.getString("role", "TIC");
-        int collectionPath = sharedPref.getInt("collectionPath", R.string.collectionIt);
-        setCollection_path(getResources().getString(collectionPath));
-        Log.d(TAG, "collectionspath: " + getCollection_path());
         Log.d(TAG, "role: " + sharedPref.getAll());
-        if(!role.equals("ADMIN")){
+        if (!role.equals("ADMIN")) {
             navigationView.getMenu().findItem(R.id.nav_users).setVisible(false);
         }
 
-        // bind de fab button
-        binding.appBarNavigationDrawer.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_navigation_drawer);
+        // bind de fab button as a shortcut to new notification
+        binding.appBarNavigationDrawer.fab.setOnClickListener(view -> {
+            final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_navigation_drawer);
 
-                if( navHostFragment != null){
-                    Fragment currentFragment = navHostFragment.getChildFragmentManager().getFragments().get(0);
+            if (navHostFragment != null) {
+                Fragment currentFragment = navHostFragment.getChildFragmentManager().getFragments().get(0);
 
-                    if (currentFragment instanceof PendingFragment) {
-                        Toast.makeText(getApplicationContext(), "Home Fragment", Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.nav_newnotification);
+                if (currentFragment instanceof PendingFragment) {
+                    navController.navigate(R.id.nav_newnotification);
 
 
-                    } else if (currentFragment instanceof CompletedFragment) {
-                        Toast.makeText(getApplicationContext(), "Slideshow Fragment", Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.nav_newnotification);
+                } else if (currentFragment instanceof CompletedFragment) {
+                    navController.navigate(R.id.nav_newnotification);
 
 
-                    } else if (currentFragment instanceof NewNotificationFragment) {
-                        Toast.makeText(getApplicationContext(), "Gallery Fragment", Toast.LENGTH_SHORT).show();
-                        binding.appBarNavigationDrawer.fab.setVisibility(View.INVISIBLE);
-                    }
+                } else if (currentFragment instanceof NewNotificationFragment) {
+                    binding.appBarNavigationDrawer.fab.setVisibility(View.INVISIBLE);
                 }
-
             }
+
         });
 
-        Log.d(TAG, "onCreate: " + navigationView.getMenu().findItem(R.id.nav_signout));
         // position of sign out is 3
-        navigationView.getMenu().findItem(R.id.nav_signout).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                new AlertDialog.Builder(NavigationDrawerActivity.this)
-                        .setTitle("Salir")
-                            .setMessage("Quieres salir de la aplicion")
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setPositiveButton("Ok", (dialogInterface, i) -> {
-                                FirebaseAuth.getInstance().signOut();
-                                //navController.navigate(R.id.nav_signout);
-                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                                finish();
-                            })
-                            .setNegativeButton("Cancel", (dialogInterface, i) -> {
-                                drawer.closeDrawers();
-                            })
-                          .show();
-                return true;
-            }
+        Log.d(TAG, "onCreate: " + navigationView.getMenu().findItem(R.id.nav_signout));
+
+        // implementation of the sign out button. It sign out of Firebse and redirect to the login page
+        navigationView.getMenu().findItem(R.id.nav_signout).setOnMenuItemClickListener(menuItem -> {
+            new AlertDialog.Builder(NavigationDrawerActivity.this)
+                    .setTitle("Salir")
+                    .setMessage("Quieres salir de la aplicion")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton("Ok", (dialogInterface, i) -> {
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+                    })
+                    .setNegativeButton("Cancel", (dialogInterface, i) -> {
+                        drawer.closeDrawers();
+                    })
+                    .show();
+            return true;
         });
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -152,6 +137,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // implementation of the option menu settings button
         switch (item.getItemId()) {
             case R.id.action_settings:
                 Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -188,13 +174,5 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-    }
-
-    public static String getCollection_path() {
-        return collection_path;
-    }
-
-    public void setCollection_path(String collection_path) {
-        this.collection_path = collection_path;
     }
 }

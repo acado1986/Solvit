@@ -1,26 +1,21 @@
 package com.solvit.mobile.activities;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+
 import com.solvit.mobile.R;
 import com.solvit.mobile.model.NotificationModel;
-import com.solvit.mobile.model.NotificationType;
 import com.solvit.mobile.model.RevisedBy;
 import com.solvit.mobile.model.Status;
 import com.solvit.mobile.model.UserInfo;
@@ -29,9 +24,10 @@ import com.solvit.mobile.repositories.FirebaseRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
+/**
+ * Details of a notification. It fill the field with the notification data sent by the fragments Pending or Completed
+ */
 public class NotificationDetailsActivity extends AppCompatActivity {
 
     private EditText etDetailsUser;
@@ -48,6 +44,7 @@ public class NotificationDetailsActivity extends AppCompatActivity {
 
     private FirebaseRepository<UserInfo> mRepoUsers;
     private FirebaseRepository<NotificationModel> mRepoNotifications;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,25 +62,26 @@ public class NotificationDetailsActivity extends AppCompatActivity {
         btnDelete = findViewById(R.id.btnDeleteNotification);
 
         // deactivate feature if not admin
-        if(getRole() != null){
-            if(!getRole().contains("ADMIN")){
+        if (getRole() != null) {
+            if (!getRole().contains("ADMIN")) {
                 spDetailsRevisedBy.setEnabled(false);
                 spDetailsFowardTo.setEnabled(false);
             }
         }
-        // get user list
+
+        // get user list for the fowardTo spinner
         mRepoUsers = new FirebaseRepository<>();
         mRepoNotifications = new FirebaseRepository<>();
         LiveData<List<UserInfo>> usersInfo = mRepoUsers.getDataSet();
         mRepoUsers.startChangeListener("users",
-                new HashMap<String,String>(),
+                new HashMap<String, String>(),
                 UserInfo.class);
         usersInfo.observe(this, new Observer<List<UserInfo>>() {
             @Override
             public void onChanged(List<UserInfo> userInfos) {
                 HashMap<String, String> nombres = new HashMap<>();
-                userInfos.stream().forEach(e->nombres.put(e.getUid(), e.getDisplayName() == null? e.getEmail() : e.getDisplayName()));
-                ArrayAdapter<String> adapter=new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, new ArrayList(nombres.values()));
+                userInfos.stream().forEach(e -> nombres.put(e.getUid(), e.getDisplayName() == null ? e.getEmail() : e.getDisplayName()));
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, new ArrayList(nombres.values()));
                 spDetailsFowardTo.setAdapter(adapter);
             }
         });
@@ -93,11 +91,13 @@ public class NotificationDetailsActivity extends AppCompatActivity {
         spDetailsRevisedBy.setAdapter(new ArrayAdapter<RevisedBy>(this, android.R.layout.simple_spinner_dropdown_item, RevisedBy.values()));
 
 
+        // get the notification from the intent
+        NotificationModel notification = (NotificationModel) getIntent().getSerializableExtra("notification");
 
-        NotificationModel notification = (NotificationModel)getIntent().getSerializableExtra("notification");
-
+        // fill the filds with data
         setNotificationDetails(notification);
 
+        // implementation of the send button
         btnSend.setOnClickListener(view -> {
             resetNotificationDetails(notification);
             mRepoNotifications.writeData(notification.getUid(), getCollectionPath(), notification);
@@ -107,6 +107,7 @@ public class NotificationDetailsActivity extends AppCompatActivity {
             finish();
         });
 
+        // omplementation of the delete button
         btnDelete.setOnClickListener(view1 -> {
             mRepoNotifications.deleteData(notification.getUid(), getCollectionPath());
             Toast.makeText(this, "Notifiacion borrada", Toast.LENGTH_SHORT).show();
@@ -118,6 +119,7 @@ public class NotificationDetailsActivity extends AppCompatActivity {
     }
 
 
+    // get the information of the field and set it on the notification to update in Firestore
     private void resetNotificationDetails(NotificationModel notification) {
         notification.setBuilding(etDetailsBuilding.getText().toString());
         notification.setRoom(etDetailsRoom.getText().toString());
@@ -125,9 +127,12 @@ public class NotificationDetailsActivity extends AppCompatActivity {
         notification.setPcNumber(Long.valueOf(etDetailsPcNumber.getText().toString()));
         notification.setStatus(spDetailsStatus.getSelectedItem().toString());
         notification.setRevisedBy(spDetailsRevisedBy.getSelectedItem().toString());
-        notification.setFowardTo(new ArrayList<String>(){{add(spDetailsFowardTo.getSelectedItem().toString());}});
+        notification.setFowardTo(new ArrayList<String>() {{
+            add(spDetailsFowardTo.getSelectedItem().toString());
+        }});
     }
 
+    // set the fields with the notification data
     private void setNotificationDetails(NotificationModel notification) {
         etDetailsUser.setText(notification.getUser());
         etDetailsBuilding.setText(notification.getBuilding());
@@ -136,17 +141,19 @@ public class NotificationDetailsActivity extends AppCompatActivity {
         etDetailsPcNumber.setText(String.valueOf(notification.getPcNumber()));
         spDetailsStatus.setSelection(Status.valueOf(notification.getStatus()).ordinal());
         spDetailsRevisedBy.setSelection(RevisedBy.valueOf(notification.getRevisedBy()).ordinal());
+        spDetailsFowardTo.setSelection(0);
     }
 
+    // gets the preferences set on the login page, role and access path.
     private String getCollectionPath() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("loginPref", Context.MODE_PRIVATE);
-        int collectionPath = sharedPref.getInt("collectionPath", R.string.collectionIt);;
+        int collectionPath = sharedPref.getInt("collectionPath", R.string.collectionIt);
         return getResources().getString(collectionPath);
     }
 
-    private String getRole(){
+    private String getRole() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("loginPref", Context.MODE_PRIVATE);
-        String role = sharedPref.getString("role", "TIC");;
+        String role = sharedPref.getString("role", "TIC");
         return role;
     }
 }

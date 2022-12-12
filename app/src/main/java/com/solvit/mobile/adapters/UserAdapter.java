@@ -22,16 +22,14 @@ import com.solvit.mobile.model.UserInfo;
 
 import java.util.List;
 
+/**
+ * User adapter for the recycle list
+ */
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
-
-    public interface OnCheckedChangeListener {
-        void onCheckedChanged(CompoundButton compoundButton, boolean b, View view, UserInfo userInfo);
-    }
 
     Context context;
     List<UserInfo> users;
     OnCheckedChangeListener listener;
-
     public UserAdapter(Context context, List<UserInfo> users, OnCheckedChangeListener listener) {
         this.context = context;
         this.users = users;
@@ -73,6 +71,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         holder.swUserActivate.setOnCheckedChangeListener(null);
     }
 
+    public interface OnCheckedChangeListener {
+        void onCheckedChanged(CompoundButton compoundButton, boolean b, View view, UserInfo userInfo);
+    }
+
     // grabbing the views from our layout recycle_view_item.xml, kinda of create method
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvFillUserMail, tvFillUserName;
@@ -89,12 +91,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }
 
         public void bind(final UserInfo userInfo, final OnCheckedChangeListener listener) {
-            swUserActivate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    listener.onCheckedChanged(compoundButton, b, itemView, userInfo);
-                    Log.d(TAG, "onCheckedChanged: " + userInfo.getUid());
-                }
+            swUserActivate.setOnCheckedChangeListener((compoundButton, b) -> {
+                listener.onCheckedChanged(compoundButton, b, itemView, userInfo);
+                Log.d(TAG, "onCheckedChanged: " + userInfo.getUid());
             });
         }
     }

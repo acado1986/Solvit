@@ -2,10 +2,6 @@ package com.solvit.mobile.activities;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,6 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,6 +26,9 @@ import com.solvit.mobile.model.Role;
 import com.solvit.mobile.model.UserInfo;
 import com.solvit.mobile.repositories.FirebaseRepository;
 
+/**
+ * Register activity that creates a new user and additional information in Firebase
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -54,21 +57,19 @@ public class RegisterActivity extends AppCompatActivity {
         spRegister.setAdapter(new ArrayAdapter<Role>(this, R.layout.spinner_item, Role.values()));
 
 
-
         btnRegister.setOnClickListener(view -> {
             // comprobar si las contraseñas coinciden
-            if(!TextUtils.equals(etRegPassword.getText().toString(), etRegPasswordConfirm.getText().toString())){
+            if (!TextUtils.equals(etRegPassword.getText().toString(), etRegPasswordConfirm.getText().toString())) {
                 Log.d(TAG, "Register: contase;a " + etRegPassword.getText().toString() + " = " + etRegPasswordConfirm.getText().toString());
                 Toast.makeText(this, "La contraseña no coincide", Toast.LENGTH_LONG).show();
                 etRegPasswordConfirm.requestFocus();
 
-            } else if(TextUtils.isEmpty(etRegEmail.getText()) ||
+            } else if (TextUtils.isEmpty(etRegEmail.getText()) ||
                     TextUtils.isEmpty(etRegPassword.getText()) ||
-                    TextUtils.isEmpty(spRegister.getSelectedItem().toString())){
+                    TextUtils.isEmpty(spRegister.getSelectedItem().toString())) {
                 Toast.makeText(this, "Tienes que facilitar un correo, una contraseña y su rol para crear un usuario", Toast.LENGTH_LONG).show();
                 etRegEmail.requestFocus();
-            }
-            else {
+            } else {
                 mAuth.createUserWithEmailAndPassword(etRegEmail.getText().toString(), etRegPassword.getText().toString())
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
